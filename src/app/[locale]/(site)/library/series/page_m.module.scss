@@ -1,0 +1,10 @@
+.series {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  .top {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+}

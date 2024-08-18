@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .container {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 160px); 
+        overflow: auto;
+      }
+      .background-image {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 2rem;
+        text-align: center;
+        flex: 1;
+      }
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 10px;
+        height: 160px;
+      }
+      .chat-btn-container {
+            position: relative;
+        }
+      .chat-btn {
+        display: inline-block;
+        width: 280px;
+        height: 130px;
+        margin-right: 20px;
+        cursor: pointer;
+        object-fit: contain;
+      }
+      .notification-badge {
+        position: absolute;
+        top: 32px;
+        right: 28px;
+        background: red;
+        color: white;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+      }
+    </style>
+    <script>
+      ;(function () {
+        var w = window
+        if (w.ChannelIO) {
+          return w.console.error('ChannelIO script included twice.')
+        }
+        var ch = function () {
+          ch.c(arguments)
+        }
+        ch.q = []
+        ch.c = function (args) {
+          ch.q.push(args)
+        }
+        w.ChannelIO = ch
+        function l() {
+          if (w.ChannelIOInitialized) {
+            return
+          }
+          w.ChannelIOInitialized = true
+          var s = document.createElement('script')
+          s.type = 'text/javascript'
+          s.async = true
+          s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js'
+          var x = document.getElementsByTagName('script')[0]
+          if (x.parentNode) {
+            x.parentNode.insertBefore(s, x)
+          }
+        }
+        if (document.readyState === 'complete') {
+          l()
+        } else {
+          w.addEventListener('DOMContentLoaded', l)
+          w.addEventListener('load', l)
+        }
+      })()
+    </script>
+    <script>
+      function onLoadBody() {
+        window.ChannelIO('boot', {
+          pluginKey: 'c660d8bb-30f0-42f3-a8b4-41f85374393e',
+          hideChannelButtonOnBoot: true
+        })
+        window.ChannelIO('onShowMessenger', () => {
+          const btn = document.querySelector('.chat-btn')
+          if(btn){
+            btn.style.display = 'none'
+          }
+        })
+        window.ChannelIO('onHideMessenger', () => {
+          const btn = document.querySelector('.chat-btn')
+          if(btn){
+            btn.style.display = 'inline-block'
+          }
+        })
+        window.ChannelIO('onBadgeChanged', function onBadgeChanged(unread, alert) {
+          console.log('badge event', unread, alert)
+          const badge = document.querySelector('.notification-badge')
+          if(unread){
+            badge.display = 'inline-block'
+            badge.innerHTML = unread.toString()
+          }else{
+            badge.display = 'none'
+          }
+        });
+      }
+      function openChannel() {
+        window.ChannelIO('showMessenger')
+      }
+    </script>
+    <title>Channel Talk Sample</title>
+  </head>
+  <body onload="onLoadBody()" style="margin: 0 0">
+    <div class="container">
+      <img class="background-image" src="bg.jpg" alt="Background Image" />
+      <div class="content"></div>
+      <div class="footer">
+        <div class="chat-btn-container">
+        <img class="chat-btn" onclick="openChannel()" src="btn-chat.png"></img>
+        <span class="notification-badge" style="display: none;"></span>
+      </div>
+      </div>
+    </div>
+  </body>
+</html>
