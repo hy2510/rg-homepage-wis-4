@@ -74,31 +74,29 @@ function ChallengeRank() {
 
   return (
     <main className={style.challenge_rank}>
-      <Dropdown title={eventTitle}>
-        {eventList.map((evt, i) => {
-          return (
-            <DropdownItem
-              key={`a_${evt.eventId}_${i}`}
-              onClick={() => {
-                onEventChange(evt.eventId)
-              }}>
-              {evt.eventTitle}
-            </DropdownItem>
-          )
-        })}
-      </Dropdown>
-      {eventTitle && (
-        <div>
-          <div>{`대회 기간: ${eventStartDate} ~ ${eventEndDate}`}</div>
-          {isEventIng && (
-            <div>
-              <span style={{ color: '#9b9b9b', fontSize: '0.85em' }}>
-                오늘 학습한 기록은 내일 오전 랭킹에 반영됩니다.
-              </span>
-            </div>
-          )}
-        </div>
-      )}
+      <div>
+        <Dropdown title={eventTitle}>
+          {eventList.map((evt, i) => {
+            return (
+              <DropdownItem
+                key={`a_${evt.eventId}_${i}`}
+                onClick={() => {
+                  onEventChange(evt.eventId)
+                }}>
+                {evt.eventTitle}
+              </DropdownItem>
+            )
+          })}
+        </Dropdown>
+        {eventTitle && (
+          <div style={{marginTop: '10px'}}>
+            <div style={{color: '#b3b9c2'}}>{`대회 기간: ${eventStartDate} ~ ${eventEndDate}`}</div>
+            {isEventIng && (
+              <div style={{color: '#b3b9c2', marginTop: '10px'}}>오늘 학습한 기록은 내일 오전 랭킹에 반영됩니다.</div>
+            )}
+          </div>
+        )}
+      </div>
       {rankUser && (
         <>
           <SubTitle>{t('t398')}</SubTitle>

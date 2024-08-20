@@ -25,6 +25,7 @@ import { useStyle } from '@/ui/context/StyleContext'
 import LoginFormAcademy from './LoginFormAcademy'
 import LoginFormPrivate from './LoginFormPrivate'
 import LoginFormSchool from './LoginFormSchool'
+import LoginFormIntro from './LoginFormIntro'
 
 const STYLE_ID = 'page_sign_in'
 
@@ -40,7 +41,9 @@ function getNationLabel(countryCode: string) {
   return ''
 }
 
-export default function LoginFormIntegrated({}: {}) {
+export default function LoginFormIntegrated({defaultNavTab}: {defaultNavTab?: 'P'|'G'}) {
+  const style = useStyle(STYLE_ID)
+  
   // @language 'common'
   const { t } = useTranslation()
 
@@ -51,8 +54,8 @@ export default function LoginFormIntegrated({}: {}) {
   const groupSearch = useFetchSearchCustomer()
   const findCustomer = useFetchFindCustomer()
 
-  const [navTab, setNavTab] = useState<'P' | 'G'>(
-    customer.customerUse === 'Private' || !customer.customerUse ? 'P' : 'G',
+  const [navTab, setNavTab] = useState<'P' | 'G'|undefined>(
+    defaultNavTab
   )
 
   const [isGroupSearchEmpty, setGroupSearchEmpty] = useState(false)
@@ -80,6 +83,9 @@ export default function LoginFormIntegrated({}: {}) {
   const onLoginBackClick = () => {
     clearCustomer()
   }
+  if(!navTab){
+    return <LoginFormIntro onClickNav={setNavTab} />
+  }
   return (
     <>
       {customer.customerId && (
@@ -91,61 +97,63 @@ export default function LoginFormIntegrated({}: {}) {
       )}
       {!customer.customerId && (
         <>
-          <div style={{ overflow: 'auto' }}>
-            <Nav>
-              <NavItem active={navTab === 'P'} onClick={() => setNavTab('P')}>
-                {t('t258')}
-              </NavItem>
-              <NavItem active={navTab === 'G'} onClick={() => setNavTab('G')}>
-                {t('t259')}
-                <span style={{ fontSize: '0.8em', fontWeight: 500 }}>
-                  {t('t260')}
-                </span>
-              </NavItem>
-            </Nav>
-          </div>
-          {navTab === 'P' && (
-            <>
-              {isCustomerLoading ? (
-                <div />
-              ) : (
-                <NationSelect
-                  nations={privateCustomer.filter((customer) =>
-                    PRIVATE_SUPPORT_NATION.includes(customer.countryCode),
-                  )}
-                  onSelectNation={(nation, customerId) => {
-                    setupCustomer(customerId)
-                  }}
-                />
-              )}
-            </>
-          )}
-          {navTab === 'G' && (
-            <CustomerSearch
-              isShowEmpty={isGroupSearchEmpty}
-              searchKeyword={groupKeyword}
-              customers={groupSearchCustomers}
-              onSearchCustomer={(keyword) => {
-                setGroupSearchEmpty(false)
-                groupSearch.fetch({
-                  keyword,
-                  callback: (data) => {
-                    if (data.success) {
-                      if (data.payload && data.payload.length > 0) {
-                        setGroupSearchCustomers(data.payload)
-                      } else {
-                        setGroupSearchEmpty(true)
+          <div className={style.log_in_box}>
+            <div style={{ overflow: 'auto' }}>
+              <Nav>
+                <NavItem active={navTab === 'P'} onClick={() => setNavTab('P')}>
+                  {t('t258')}
+                </NavItem>
+                <NavItem active={navTab === 'G'} onClick={() => setNavTab('G')}>
+                  {t('t259')}
+                  <span style={{ fontSize: '0.8em', fontWeight: 500 }}>
+                    {t('t260')}
+                  </span>
+                </NavItem>
+              </Nav>
+            </div>
+            {navTab === 'P' && (
+              <>
+                {isCustomerLoading ? (
+                  <div />
+                ) : (
+                  <NationSelect
+                    nations={privateCustomer.filter((customer) =>
+                      PRIVATE_SUPPORT_NATION.includes(customer.countryCode),
+                    )}
+                    onSelectNation={(nation, customerId) => {
+                      setupCustomer(customerId)
+                    }}
+                  />
+                )}
+              </>
+            )}
+            {navTab === 'G' && (
+              <CustomerSearch
+                isShowEmpty={isGroupSearchEmpty}
+                searchKeyword={groupKeyword}
+                customers={groupSearchCustomers}
+                onSearchCustomer={(keyword) => {
+                  setGroupSearchEmpty(false)
+                  groupSearch.fetch({
+                    keyword,
+                    callback: (data) => {
+                      if (data.success) {
+                        if (data.payload && data.payload.length > 0) {
+                          setGroupSearchCustomers(data.payload)
+                        } else {
+                          setGroupSearchEmpty(true)
+                        }
+                        setGroupKeyword(keyword)
                       }
-                      setGroupKeyword(keyword)
-                    }
-                  },
-                })
-              }}
-              onSelectCustomer={(customer) => {
-                setupCustomer(customer.customerId)
-              }}
-            />
-          )}
+                    },
+                  })
+                }}
+                onSelectCustomer={(customer) => {
+                  setupCustomer(customer.customerId)
+                }}
+              />
+            )}
+          </div>
         </>
       )}
     </>

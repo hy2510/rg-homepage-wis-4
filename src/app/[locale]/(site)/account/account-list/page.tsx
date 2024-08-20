@@ -27,6 +27,15 @@ import { useStyle } from '@/ui/context/StyleContext'
 
 const STYLE_ID = 'page_account_list'
 
+declare global {
+  interface WindowEventMap {
+    beforeinstallprompt: Event & {
+      prompt: () => Promise<void>;
+      userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+    };
+  }
+}
+
 export default function Page() {
   const style = useStyle(STYLE_ID)
 
@@ -74,8 +83,61 @@ export default function Page() {
     setRedirect(SITE_PATH.ACCOUNT.SIGN_IN)
   }
 
+  // PWA 설치 메세지 띄우기
+  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+  const [isInstallable, setIsInstallable] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleAppInstalled = () => {
+      console.log('PWA installed');
+      setIsInstallable(false);
+    };
+
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      const promptEvent = deferredPrompt as WindowEventMap['beforeinstallprompt'];
+      promptEvent.prompt();
+      const choiceResult = await promptEvent.userChoice;
+
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+
+      setDeferredPrompt(null);
+      setIsInstallable(false);
+    }
+  };
+
   return (
     <main className={style.account_list}>
+      {isInstallable && (
+        <button onClick={handleInstallClick}>
+          Install App
+        </button>
+      )}
       <div className={style.catchphrase}>
         <div className={style.brand_name}>{t('t206')}</div>
         <div className={style.sentence}>{t('t207')}</div>

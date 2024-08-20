@@ -205,6 +205,9 @@ function TicketRegistFailedModal({
   failedTicketInfo: { ticket: string; code: number }[]
   onCloseClick?: () => void
 }) {
+
+  const style = useStyle(STYLE_ID)
+
   return (
     <Modal
       header={true}
@@ -212,9 +215,9 @@ function TicketRegistFailedModal({
       compact
       onClickDelete={onCloseClick}
       onClickLightbox={onCloseClick}>
-      <div className="container">
+      <div className={style.ticket_regist_failed_modal}>
         <h3>티켓등록에 실패하였습니다.</h3>
-        <ol style={{ marginTop: 'var(--space-xl)' }}>
+        <ol>
           {failedTicketInfo.map((info, idx) => {
             let message = '유효하지 않는 티켓입니다.'
             if (info.code === -3) {
@@ -226,7 +229,7 @@ function TicketRegistFailedModal({
               <li
                 key={`${info.ticket}-${idx}`}
                 style={{ marginTop: 'var(--space-m)' }}>
-                <h3>{message}</h3>
+                <h4>{message}</h4>
                 <div style={{ marginTop: 'var(--space-xxs)' }}>
                   {info.ticket}
                 </div>
@@ -234,14 +237,14 @@ function TicketRegistFailedModal({
             )
           })}
         </ol>
-        <div style={{ marginTop: 'var(--space-xl)' }}>
+        <div>
           <p>입력한 티켓번호가 올바른지 확인해주세요.</p>
           <p>
             티켓등록에 문제가 발생하였다면 리딩게이트 고객센터(1599-0533)로
             문의주세요.
           </p>
         </div>
-        <div style={{ marginTop: 'var(--space-xl)' }}>
+        <div>
           <Button shadow onClick={onCloseClick}>
             확인
           </Button>

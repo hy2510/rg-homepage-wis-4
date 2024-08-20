@@ -23,6 +23,7 @@ import { MyRgModal } from './MyRgModal'
 import { NoticeModal } from './NoticeModal'
 import { QuestModal } from './QuestModal'
 import { StreakModal } from './StreakModal'
+import { useStudentDailyLearning } from '@/client/store/student/daily-learning/selector'
 
 const STYLE_ID = 'global_header'
 
@@ -107,6 +108,9 @@ const MENU = {
 export default function Gheader() {
   const style = useStyle(STYLE_ID)
 
+  const studyLearning = useStudentDailyLearning().payload
+  const studyLevel = studyLearning.settingLevelName
+
   const isMobile = useScreenMode() === 'mobile'
   const appType = useApplicationType()
   const isShowSignUp = appType === 'private'
@@ -140,6 +144,7 @@ export default function Gheader() {
   if (appType === 'app' && !logOnStatus) {
     return <></>
   }
+
   return (
     <>
       <div className={`${style.global_header}${styleDodoABC}`}>
@@ -147,28 +152,22 @@ export default function Gheader() {
           <div className={style.company_logo}>
             <a href={SITE_PATH.HOME.MAIN}>
               {customLogo ? (
-                <div
+                <Image
+                  alt=""
+                  src={customLogo}
+                  width={240}
+                  height={80}
                   style={{
-                    width: '175px',
-                    height: '50px',
-                    borderRadius: '10px',
-                    display: 'flex',
-                    backgroundColor: 'white',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    alt=""
-                    src={customLogo}
-                    width={175}
-                    height={50}
-                    style={{
-                      width: '100%',
-                      objectFit: 'contain',
-                      padding: '4px',
-                    }}
-                  />
-                </div>
+                    width: 'auto',
+                    height: 'auto',
+                    maxWidth: isMobile ? '120px' : '250px',
+                    maxHeight: isMobile ? '40px' : '52px',
+                    borderRadius: '8px',
+                    backgroundColor: '#fff',
+                    padding: '2.5px 5px',
+                    display: 'block',
+                  }}
+                />
               ) : (
                 <Image
                   alt=""
@@ -186,6 +185,7 @@ export default function Gheader() {
             isMobile={isMobile}
             isShowSignUp={isShowSignUp}
             onClick={onShowModal}
+            studyLevel={studyLevel}
           />
         </div>
       </div>
@@ -214,17 +214,19 @@ function GNBMenu({
   isMobile,
   isShowSignUp,
   onClick,
+  studyLevel,
 }: {
   pathname: string
   isLogOn: boolean
   isMobile: boolean
   isShowSignUp?: boolean
   onClick: (name: ModalViewNameType) => void
+  studyLevel?: string
 }) {
   if (isLogOn) {
     return (
       <>
-        <GnbLogOn pathname={pathname} isMobile={isMobile} onClick={onClick} />
+        <GnbLogOn pathname={pathname} isMobile={isMobile} onClick={onClick} studyLevel={studyLevel} />
         {isMobile && <GnbLogOnMobile pathname={pathname} />}
       </>
     )
@@ -246,10 +248,12 @@ function GnbLogOn({
   pathname,
   isMobile,
   onClick,
+  studyLevel,
 }: {
   pathname: string
   isMobile?: boolean
   onClick: (name: ModalViewNameType) => void
+  studyLevel?: string
 }) {
   const style = useStyle(STYLE_ID)
 
@@ -318,13 +322,17 @@ function GnbLogOn({
         isNotice={true}
       /> 
       */}
-        <OptionButton
-          isAvatar
-          imgSrc={userAvatar.imageCircle}
-          onClick={() => {
-            onClick('my')
-          }}
-        />
+        <div className={style.user_avatar_area}>
+          <OptionButton
+            isAvatar
+            imgSrc={userAvatar.imageCircle}
+            onClick={() => {
+              onClick('my')
+            }}
+          />
+          {/* 학습자의 레벨 */}
+          <div className={style.user_level}>{studyLevel}</div>
+        </div>
       </div>
     </>
   )

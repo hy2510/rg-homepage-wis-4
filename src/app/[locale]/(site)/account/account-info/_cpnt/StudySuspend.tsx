@@ -12,6 +12,9 @@ import { useFetchReloadStudentStudyState } from '@/client/store/student/info/hoo
 import { useStudentStudyable } from '@/client/store/student/info/selector'
 import { AdjustHistory } from '@/repository/client/object/adjust-history'
 import { Modal } from '@/ui/common/common-components'
+import { useStyle } from '@/ui/context/StyleContext'
+
+const STYLE_ID = 'page_account_info'
 
 export default function StudySuspend() {
   const { loading: isReloadStudentStudyLoading, fetch: reloadStudentStudy } =
@@ -144,55 +147,47 @@ function SuspendView({
     })
   }
 
+  const style = useStyle(STYLE_ID)
+
   return (
-    <div>
-      <div>
-        <div>
-          <p>
-            <span style={{ fontWeight: 'bold', fontSize: '1.1em' }}>
-              {suspendTitle}
-            </span>
-          </p>
-        </div>
-        <div>
-          <br />
+    <>
+      <div className={style.suspend_view}>
+        <div className={style.txt_1}>{suspendTitle}</div>
+        <div className={style.txt_2}>
           {payload && payload.length > 0 && (
             <>
-              <p>{`총 3회 중 ${payload.length}회 일시중지하였습니다.`}</p>
+              <div>{`총 3회 중 ${payload.length}회 일시중지하였습니다.`}</div>
               {payload.map((item, idx) => {
                 return (
                   <div
-                    key={`${item.startDate}-${item.endDate}`}>{`${idx + 1}회: ${DateUtils.toStringDate(DateUtils.createDate(item.startDate))} ~ ${DateUtils.toStringDate(DateUtils.createDate(item.endDate))}`}</div>
+                    key={`${item.startDate}-${item.endDate}`}>{`• ${idx + 1}회: ${DateUtils.toStringDate(DateUtils.createDate(item.startDate))} ~ ${DateUtils.toStringDate(DateUtils.createDate(item.endDate))}`}</div>
                 )
               })}
-              <br />
             </>
           )}
         </div>
 
-        <div style={{ fontSize: '0.8em', color: 'gray' }}>
-          <p>학습 일시 중지는 연 3회까지 사용할 수 있습니다.</p>
-          <p>
-            1회 신청 시 30일간 잔여 학습일 수 차감을 막을 수 있으며, 일시 중지
-            기간 안에 해지할 수도 있습니다. <br /> (단, 학습 일시 중지 신청
-            당일은 해지가 안됩니다.)
-          </p>
+        <div className={style.txt_3}>
+          학습 일시 중지는 연 3회까지 사용할 수 있습니다. 1회 신청 시 30일간 잔여 학습일 수 차감을 막을 수 있으며, 일시 중지 기간 안에 해지할 수도 있습니다. <br /> (단, 학습 일시 중지 신청 당일은 해지가 안됩니다.)
         </div>
 
-        <br />
+        <div></div>
+
         {studyState === 'PAUSED' && (
-          <button
-            style={{ color: 'red' }}
-            onClick={() => onShowSuspendSettingPopup()}>
-            일시중지 해제
-          </button>
+          <div className={style.btn_link} onClick={() => onShowSuspendSettingPopup()}>일시중지 해제</div>
+          // <button
+          //   style={{ color: 'red' }}
+          //   onClick={() => onShowSuspendSettingPopup()}>
+          //   일시중지 해제
+          // </button>
         )}
         {isSuspendPauseActive && (
-          <button
-            style={{ color: 'red' }}
-            onClick={() => onShowSuspendSettingPopup()}>
-            일시중지 신청
-          </button>
+          <div className={style.btn_link} onClick={() => onShowSuspendSettingPopup()}>일시중지 신청</div>
+          // <button
+          //   style={{ color: 'red' }}
+          //   onClick={() => onShowSuspendSettingPopup()}>
+          //   일시중지 신청
+          // </button>
         )}
       </div>
       {isShowSettingModal && (
@@ -204,7 +199,7 @@ function SuspendView({
           onCancelClick={() => setShowSettingModal(false)}
         />
       )}
-    </div>
+    </>
   )
 }
 
@@ -217,45 +212,33 @@ function SuspendSettingModal({
   onConfirmClick?: () => void
   onCancelClick?: () => void
 }) {
+
+  const style = useStyle(STYLE_ID)
+
   return (
-    <Modal onClickLightbox={() => onCancelClick && onCancelClick()}>
-      <div style={{ padding: '16px' }}>
+    <Modal onClickLightbox={() => onCancelClick && onCancelClick()} compact header title={currentPause ? '학습 일시 중지 해제' : '학습 일시 중지 신청'}>
+      <div className={style.suspend_setting_modal}>
         {currentPause ? (
           <>
-            <h2>학습 일시 중지 해제</h2>
             <div>
-              <p>
-                학습 일시중지를 해제하면 오늘부터 잔여학습일수가 차감됩니다.
-                학습은 일시중지 해제 이후 즉시 가능합니다. 학습 일시중지를
-                해제하시겠습니까?
-              </p>
+              학습 일시중지를 해제하면 오늘부터 잔여학습일수가 차감됩니다.
+              학습은 일시중지 해제 이후 즉시 가능합니다. 학습 일시중지를
+              해제하시겠습니까?  
             </div>
           </>
         ) : (
           <>
-            <h2>학습 일시 중지 신청</h2>
             <div>
-              <p>
-                학습 일시중지는 유료회원에 한하여 아이디당 연 3회까지 사용할 수
-                있으며 1회 신청시 자동으로 30일 중지되고, 기간 종료 익일부터
-                자동으로 잔여 학습일수가 차감됩니다. 학습 일시중지를 신청한
-                당일에는 해지를 할 수 없습니다. 학습을 중지하시겠습니까?
-              </p>
+              학습 일시중지는 유료회원에 한하여 아이디당 연 3회까지 사용할 수
+              있으며 1회 신청시 자동으로 30일 중지되고, 기간 종료 익일부터
+              자동으로 잔여 학습일수가 차감됩니다. 학습 일시중지를 신청한
+              당일에는 해지를 할 수 없습니다. 학습을 중지하시겠습니까?
             </div>
           </>
         )}
-        <div>
-          <br />
-          <button
-            style={{ display: 'inline-block' }}
-            onClick={() => onConfirmClick && onConfirmClick()}>
-            예
-          </button>
-          <button
-            style={{ display: 'inline-block' }}
-            onClick={() => onCancelClick && onCancelClick()}>
-            아니오
-          </button>
+        <div className={style.buttons}>
+          <div className={style.btn_light} onClick={() => onConfirmClick && onConfirmClick()}>예</div>
+          <div className={style.btn_light} onClick={() => onCancelClick && onCancelClick()}>아니오</div>
         </div>
       </div>
     </Modal>

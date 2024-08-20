@@ -48,10 +48,10 @@ export default function Page() {
   return (
     <div className={style.sns}>
       <SnsCard
-        title={'RG 일상컷'}
-        txt_link={'카페글 보러가기'}
+        title={'RG에 빠진 아이들'}
+        txt_link={'블로그글 보러가기'}
         href={
-          'https://cafe.naver.com/readinggatecafe?iframe_url=/ArticleList.nhn%3Fsearch.clubid=29561033%26search.menuid=193%26search.boardtype=L'
+          'https://blog.naver.com/PostList.naver?blogId=readinggate_official&from=postList&categoryNo=10&parentCategoryNo=10'
         }
         imgSrc={'/src/images/@customer-review/sns_card_1.svg'}
       />

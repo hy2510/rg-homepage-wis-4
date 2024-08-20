@@ -2,6 +2,7 @@
 
 import useTranslation from '@/localization/client/useTranslations'
 import { useStyle } from '@/ui/context/StyleContext'
+import Link from 'next/link'
 
 const STYLE_ID = 'global_footer'
 
@@ -19,12 +20,20 @@ export default function Gfooter() {
           <span>{'1599-0533'}</span>
         </div> */}
         <div className={style.row_b}>
-          <div>{t('t028')}</div>
-          <div>{t('t029')}</div>
+          <Link href={'/home/main'}>
+            <div>{t('t028')}</div>
+          </Link>
+          {/* <div>{t('t029')}</div> */}
           {/* <div>{t('t030')}</div> */}
-          <div>{t('t297')}</div>
-          <div>{t('t419')}</div>
-          <div>{t('t420')}</div>
+          <Link href={'/home/rg-membership/terms-of-service'}>
+            <div>{t('t297')}</div>
+          </Link>
+          <Link href={'/home/rg-membership/privacy-policy'}>
+            <div>{t('t419')}</div>
+          </Link>
+          <Link href={'https://www.readinggate.com/Community/BringInInstitution'} target='_blank'>
+            <div>{t('t420')}</div>
+          </Link>
         </div>
         <div className={style.row_c}>
           <div>{t('t421')}</div>

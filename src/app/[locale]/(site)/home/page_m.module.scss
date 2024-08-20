@@ -47,3 +47,20 @@
     }
   }
 }
+
+// 챗봇
+.chatbot_area {
+  position: fixed;
+  bottom: calc(70px + env(safe-area-inset-bottom));
+  right: 10px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  .chat_icon {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+  }
+}

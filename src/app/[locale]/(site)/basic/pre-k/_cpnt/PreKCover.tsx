@@ -29,25 +29,27 @@ export default function PreKCover({
   const isCompleted = passedCount >= 2
 
   return (
-    <div
-      className={`${style.study_thumbnail}${active ? ` ${style.active}` : ''}${isPassed ? ` ${style.passed}` : ''}${isCompleted ? ` ${style.passed_all}` : ''}`}>
-      {isPassed ? (
-        <div
-          className={
-            isCompleted ? style.ico_passed_all : style.ico_passed_1
-          }></div>
-      ) : (
-        <></>
-      )}
-      <div className={style.img_thumbnail} onClick={onClickBook}>
-        <Image src={coverImage} alt="" width={320} height={180} />
+    <div>
+      <div
+        className={`${style.study_thumbnail}${active ? ` ${style.active}` : ''}${isPassed ? ` ${style.passed}` : ''}${isCompleted ? ` ${style.passed_all}` : ''}`}>
+        {isPassed ? (
+          <div
+            className={
+              isCompleted ? style.ico_passed_all : style.ico_passed_1
+            }></div>
+        ) : (
+          <></>
+        )}
+        <div className={style.img_thumbnail} onClick={onClickBook}>
+          <Image src={coverImage} alt="" width={320} height={180} />
+        </div>
+        {downloadPath && (
+          <div className={style.btn_download} onClick={onClickDownload}></div>
+        )}
       </div>
       <div className={style.txt_study_title} onClick={onClickBook}>
         {title}
       </div>
-      {downloadPath && (
-        <div className={style.btn_download} onClick={onClickDownload}></div>
-      )}
     </div>
   )
 }

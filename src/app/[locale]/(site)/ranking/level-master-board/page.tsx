@@ -51,9 +51,7 @@ const LevelMasterLayout = ({ data }: { data: LevelMasterBoardResponse }) => {
 
   return (
     <main className={style.level_master_layout}>
-      <div style={{color: 'rgb(155, 155, 155)', fontSize: '0.85em'}}>
-        최근 30일간 레벨 마스터를 획득한 학생입니다. 오늘 학습한 기록은 내일 오전 랭킹에 반영됩니다.
-      </div>
+      <div style={{color: '#b3b9c2', marginTop: '10px'}}>최근 30일간 레벨 마스터를 획득한 학생입니다. 오늘 학습한 기록은 내일 오전 랭킹에 반영됩니다.</div>
       <LevelMasterBoard list={boardList} />
       {hasMore && (
         <div style={{ display: 'flex', justifyContent: 'center' }}>

@@ -8,6 +8,7 @@ import LoginFormBetaService from './LoginFormBetaService'
 import LoginFormIntegrated from './LoginFormIntegrated'
 import LoginFormPrivate from './LoginFormPrivate'
 import LoginFormSchool from './LoginFormSchool'
+import LoginFormIntro from './LoginFormIntro'
 
 export default function Login({
   isBetaLogin = false,
@@ -18,13 +19,15 @@ export default function Login({
 
   return (
     <LoginContextProvider>
-      <LoginForm>
-        {appType === 'private' && <LoginFormPrivate />}
-        {appType === 'school' && <LoginFormSchool />}
-        {appType === 'academy' && <LoginFormAcademy />}
-        {appType === 'app' &&
-          (!isBetaLogin ? <LoginFormIntegrated /> : <LoginFormBetaService />)}
-      </LoginForm>
+      {(appType === 'private' || 'school' || 'academy' || 'app') && 
+        <LoginForm>
+          {appType === 'private' && <LoginFormPrivate />}
+          {appType === 'school' && <LoginFormSchool />}
+          {appType === 'academy' && <LoginFormAcademy />}
+          {appType === 'app' &&
+            (!isBetaLogin ? <LoginFormIntegrated /> : <LoginFormBetaService />)}
+        </LoginForm> 
+      }
     </LoginContextProvider>
   )
 }

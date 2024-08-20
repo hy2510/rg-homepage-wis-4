@@ -537,13 +537,14 @@ const ChallengeDayProgress = ({
         </div>
         <div className={style.row_b}>
           {/* 프로그래스 인포 */}
-          <div className={style.txt_d}>D-{eventDay - progressDay - 1}</div>
+          {/* <div className={style.txt_d}>D-{eventDay - progressDay - 1}</div> */}
+          <div className={style.txt_d}>D-{eventDay - progressDay}</div>
           {!isDropout &&
             recommendDailyPoints > 0 &&
             recommendDailyPoints <= 150 && (
               <div className={style.comment}>
-                / 매일 평균 {NumberUtils.toDecimalPoint(recommendDailyPoints)}P
-                획득 권장
+                {/* / 매일 평균 {NumberUtils.toDecimalPoint(recommendDailyPoints)}P
+                획득 권장 */}
               </div>
             )}
         </div>

@@ -155,123 +155,144 @@ export default function LoginFormSchool({
       : !classGroup || !classOne || !userName || !password
   return (
     <>
-      {isAvailableClassLogin && (
-        <Nav>
-          <NavItem active={tab === 'Id'} onClick={() => setTab('Id')}>
-            {t('t270')}
-          </NavItem>
-          <NavItem active={tab === 'Class'} onClick={() => setTab('Class')}>
-            {t('t271')}
-          </NavItem>
-        </Nav>
-      )}
-      <div className={style.logIn_group_member}>
-        {customHeader}
-        {tab === 'Class' ? (
-          <>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '15px',
-              }}>
-              <select
+      <div className={style.log_in_box}>
+        {isAvailableClassLogin && (
+          <Nav>
+            <NavItem active={tab === 'Id'} onClick={() => setTab('Id')}>
+              {t('t270')}
+            </NavItem>
+            <NavItem active={tab === 'Class'} onClick={() => setTab('Class')}>
+              {t('t271')}
+            </NavItem>
+          </Nav>
+        )}
+        <div className={style.logIn_group_member}>
+          {customHeader}
+          {tab === 'Class' ? (
+            <>
+              <div
                 style={{
-                  padding: '12px',
-                  border: '2px solid #dae1ea',
-                  borderRadius: '8px',
-                  width: '100%',
-                }}
-                value={classGroup}
-                onChange={(e) => {
-                  onChangeClassGroup(e.target.value)
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: '15px',
                 }}>
-                <option key={'grd_default'} disabled value="">
-                  {t('t272')}
-                </option>
-                {groupList.map((group) => {
-                  return (
-                    <option key={group.classGroupId} value={group.classGroupId}>
-                      {group.name}
-                    </option>
-                  )
-                })}
-              </select>
-              <select
-                style={{
-                  padding: '12px',
-                  border: '2px solid #dae1ea',
-                  borderRadius: '8px',
-                  width: '100%',
+                <select
+                  style={{
+                    padding: '12px',
+                    border: '2px solid #dae1ea',
+                    borderRadius: '8px',
+                    width: '100%',
+                  }}
+                  value={classGroup}
+                  onChange={(e) => {
+                    onChangeClassGroup(e.target.value)
+                  }}>
+                  <option key={'grd_default'} disabled value="">
+                    {t('t272')}
+                  </option>
+                  {groupList.map((group) => {
+                    return (
+                      <option key={group.classGroupId} value={group.classGroupId}>
+                        {group.name}
+                      </option>
+                    )
+                  })}
+                </select>
+                <select
+                  style={{
+                    padding: '12px',
+                    border: '2px solid #dae1ea',
+                    borderRadius: '8px',
+                    width: '100%',
+                  }}
+                  value={classOne}
+                  onChange={(e) => {
+                    setClassOne(e.target.value)
+                  }}>
+                  {!classList ||
+                    (classList.length === 0 && (
+                      <option key={'cls_default'} disabled value="">
+                        {t('t273')}
+                      </option>
+                    ))}
+                  {classList.map((cls) => {
+                    return (
+                      <option key={cls.classId} value={cls.classId}>
+                        {cls.name}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <TextField
+                ref={userNameInputRef}
+                id={'user-name'}
+                hint={t('t232')}
+                onTextChange={(text) => setUserName(text)}
+                value={userName}
+                onKeyDown={(e) => {
+                  if (e.key.toLowerCase() === 'enter') {
+                    if (!isLoginDisabled) {
+                      onRunLogin({
+                        tab,
+                        classId: classOne,
+                        studentName: userName,
+                        password,
+                      })
+                    } else if (userName && !password) {
+                      passwordInputRef?.current?.focus()
+                    }
+                  }
                 }}
-                value={classOne}
-                onChange={(e) => {
-                  setClassOne(e.target.value)
-                }}>
-                {!classList ||
-                  (classList.length === 0 && (
-                    <option key={'cls_default'} disabled value="">
-                      {t('t273')}
-                    </option>
-                  ))}
-                {classList.map((cls) => {
-                  return (
-                    <option key={cls.classId} value={cls.classId}>
-                      {cls.name}
-                    </option>
-                  )
-                })}
-              </select>
-            </div>
+              />
+            </>
+          ) : (
             <TextField
-              ref={userNameInputRef}
-              id={'user-name'}
-              hint={t('t232')}
-              onTextChange={(text) => setUserName(text)}
-              value={userName}
+              ref={loginIdInputRef}
+              id={'user-id'}
+              hint={t('t233')}
+              onTextChange={(text) => setLoginId(text)}
+              value={loginId}
               onKeyDown={(e) => {
                 if (e.key.toLowerCase() === 'enter') {
                   if (!isLoginDisabled) {
-                    onRunLogin({
-                      tab,
-                      classId: classOne,
-                      studentName: userName,
-                      password,
-                    })
-                  } else if (userName && !password) {
+                    onRunLogin({ tab: 'Id', id: loginId, password })
+                  } else if (loginId && !password) {
                     passwordInputRef?.current?.focus()
                   }
                 }
               }}
             />
-          </>
-        ) : (
+          )}
           <TextField
-            ref={loginIdInputRef}
-            id={'user-id'}
-            hint={t('t233')}
-            onTextChange={(text) => setLoginId(text)}
-            value={loginId}
+            ref={passwordInputRef}
+            id={'user-passowrd'}
+            hint={t('t202')}
+            password
+            onTextChange={(text) => setPassword(text)}
+            value={password}
             onKeyDown={(e) => {
               if (e.key.toLowerCase() === 'enter') {
                 if (!isLoginDisabled) {
-                  onRunLogin({ tab: 'Id', id: loginId, password })
-                } else if (loginId && !password) {
-                  passwordInputRef?.current?.focus()
+                  onRunLogin({
+                    tab,
+                    id: loginId,
+                    classId: classOne,
+                    studentName: userName,
+                    password,
+                  })
+                } else if (tab === 'Id' && !loginId && password) {
+                  loginIdInputRef?.current?.focus()
+                } else if (tab === 'Class' && !userName && password) {
+                  userNameInputRef?.current?.focus()
                 }
               }
             }}
           />
-        )}
-        <TextField
-          ref={passwordInputRef}
-          id={'user-passowrd'}
-          hint={t('t202')}
-          password
-          onTextChange={(text) => setPassword(text)}
-          value={password}
-          onKeyDown={(e) => {
-            if (e.key.toLowerCase() === 'enter') {
+          <Button
+            shadow={!isLoginDisabled}
+            color={isLoginDisabled ? 'gray' : undefined}
+            onClick={() => {
               if (!isLoginDisabled) {
                 onRunLogin({
                   tab,
@@ -280,40 +301,21 @@ export default function LoginFormSchool({
                   studentName: userName,
                   password,
                 })
-              } else if (tab === 'Id' && !loginId && password) {
-                loginIdInputRef?.current?.focus()
-              } else if (tab === 'Class' && !userName && password) {
-                userNameInputRef?.current?.focus()
               }
-            }
-          }}
-        />
-        <Button
-          shadow={!isLoginDisabled}
-          color={isLoginDisabled ? 'gray' : undefined}
-          onClick={() => {
-            if (!isLoginDisabled) {
-              onRunLogin({
-                tab,
-                id: loginId,
-                classId: classOne,
-                studentName: userName,
-                password,
-              })
-            }
-          }}>
-          {t('t214')}
-        </Button>
-        <div className={style.row_box}>
-          <Link href={SITE_PATH.ACCOUNT.FORGOT_ID}>{t('t225')}</Link>
-          <Link href={SITE_PATH.ACCOUNT.FORGOT_PASSWORD}>{t('t247')}</Link>
-        </div>
-        <div className={style.comment}>
-          {`❗️ ${t('t274', { txt: customerName })}`}
-          {/* 
-          <br />
-          {`❗️ ${t('t257', { txt: customerName })}`} 
-          */}
+            }}>
+            {t('t214')}
+          </Button>
+          <div className={style.row_box}>
+            <Link href={SITE_PATH.ACCOUNT.FORGOT_ID}>{t('t225')}</Link>
+            <Link href={SITE_PATH.ACCOUNT.FORGOT_PASSWORD}>{t('t247')}</Link>
+          </div>
+          <div className={style.comment}>
+            {`❗️ ${t('t274', { txt: customerName })}`}
+            {/* 
+            <br />
+            {`❗️ ${t('t257', { txt: customerName })}`} 
+            */}
+          </div>
         </div>
       </div>
     </>

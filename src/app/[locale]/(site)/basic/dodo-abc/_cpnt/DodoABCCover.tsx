@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useStyle } from '@/ui/context/StyleContext'
 import { DodoABCType } from './DodoABCContainer'
+import { useState } from 'react'
 
 const STYLE_ID = 'page_kids_dodo_abc'
 
@@ -70,18 +71,41 @@ export function DodoABCMovieCover({
   thumbnailImage: string
 }) {
   const style = useStyle(STYLE_ID)
+
+  const [isVideoActive, setIsVideoActive] = useState(false)
+
+  const VideoModal = ({videoPath, thumbnailImage}: {videoPath?: string, thumbnailImage?: string}) => {
+    return (
+      <>
+        <div className={style.video_box}>
+          <div className={style.video_container}>
+            <video controls poster={thumbnailImage}>
+              <source src={videoPath} type="video/mp4" />
+            </video>
+            <div className={style.btn_delete} onClick={() => {isVideoActive && setIsVideoActive(false)}}></div>
+          </div>
+        </div>
+      </>
+    )
+  }
+
   return (
-    <div className={`${style.movie_thumbnail}`}>
-      <div className={style.tag}>
-        <span className={style.ico_movie}></span>
-        <span className={style.txt_tag}>{tag}</span>
+    <>
+      <div className={`${style.movie_thumbnail}`} onClick={() => {!isVideoActive && setIsVideoActive(true)}}>
+        <div className={style.tag}>
+          <span className={style.ico_movie}></span>
+          <span className={style.txt_tag}>{tag}</span>
+        </div>
+        <div
+          className={style.img_thumbnail}
+          style={{
+            backgroundImage: `url('${thumbnailImage}')`,
+          }}>
+        </div>
+        {isVideoActive && <VideoModal videoPath={videoPath} thumbnailImage={thumbnailImage} />}
       </div>
-      <div
-        className={style.img_thumbnail}
-        style={{
-          backgroundImage: `url('${thumbnailImage}')`,
-        }}></div>
-    </div>
+      
+    </>
   )
 }
 

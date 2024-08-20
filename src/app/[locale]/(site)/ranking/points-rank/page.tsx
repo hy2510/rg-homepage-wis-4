@@ -188,21 +188,19 @@ function PointRank() {
 
   return (
     <main className={style.point_rank}>
-      <Dropdown
-        title={
-          tab === 'monthly'
-            ? `${t('t402', { num: new Date().getMonth() + 1 })}`
-            : `${t('t403')}`
-        }>
-        <DropdownItem onClick={() => setTab('monthly')}>
-          {t('t404')}
-        </DropdownItem>
-        <DropdownItem onClick={() => setTab('total')}>{t('t403')}</DropdownItem>
-      </Dropdown>
       <div>
-        <span style={{ color: '#9b9b9b', fontSize: '0.85em' }}>
-          오늘 학습한 기록은 내일 오전 랭킹에 반영됩니다.
-        </span>
+        <Dropdown
+          title={
+            tab === 'monthly'
+              ? `${t('t402', { num: new Date().getMonth() + 1 })}`
+              : `${t('t403')}`
+          }>
+          <DropdownItem onClick={() => setTab('monthly')}>
+            {t('t404')}
+          </DropdownItem>
+          <DropdownItem onClick={() => setTab('total')}>{t('t403')}</DropdownItem>
+        </Dropdown>
+        <div style={{color: '#b3b9c2', marginTop: '10px'}}>오늘 학습한 기록은 내일 오전 랭킹에 반영됩니다.</div>
       </div>
 
       {rankUser && (

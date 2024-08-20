@@ -19,7 +19,8 @@ export default function LoginForm({ children }: { children?: ReactNode }) {
         <div className={style.brand_name}>{t('t206')}</div>
         <div className={style.sentence}>{t('t207')}</div>
       </div>
-      <div className={style.log_in_box}>{children}</div>
+      {/* <div className={style.log_in_box}>{children}</div> */}
+      {children}
       <div className={style.link}>
         <Link href="/account/account-list">{t('t256')}</Link>
       </div>

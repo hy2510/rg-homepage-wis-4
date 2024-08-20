@@ -264,3 +264,13 @@
         }
     }
 }
+
+.ticket_regist_failed_modal {
+    padding: var(--space-m);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    ol {
+        padding: var(--space-m);
+    }
+  }

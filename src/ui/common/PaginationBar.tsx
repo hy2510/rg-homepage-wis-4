@@ -71,7 +71,7 @@ function PagenationNavButton({
   isHidden?: boolean
   onPageNavClick?: () => void
 }) {
-  const imgName = type === 'prev' ? 'chv_left.svg' : 'chv_right.svg'
+  const imgName = type === 'prev' ? 'chv_left_gray.svg' : 'chv_right_gray.svg'
   const alt = type === 'prev' ? 'Previous' : 'Next'
 
   return (

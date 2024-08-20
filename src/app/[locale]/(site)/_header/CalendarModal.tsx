@@ -192,11 +192,11 @@ const CalendarUI = ({ loading: propsLoading }: { loading: boolean }) => {
     if (calendarSize) {
       const dataDate = DateUtils.createDate(attendCalendar[0].regDate)
 
-      isAvailableDate =
+      if (
         dataDate.getFullYear() === info.year &&
-        dataDate.getMonth() + 1 === info.month
-
-      if (isAvailableDate && studyCalendar.length) {
+        dataDate.getMonth() + 1 === info.month &&
+        studyCalendar.length
+      ) {
         const studyDataDate = DateUtils.createDate(studyCalendar[0].regDate)
         isAvailableDate =
           studyDataDate.getFullYear() === info.year &&

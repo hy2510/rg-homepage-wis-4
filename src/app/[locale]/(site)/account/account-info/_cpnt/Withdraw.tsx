@@ -8,6 +8,9 @@ import { useStudentHistory } from '@/client/store/student/history/selector'
 import { useStudentInfo } from '@/client/store/student/info/selector'
 import { useFetchStudentWithdraw } from '@/client/store/student/withdraw/hook'
 import { Modal } from '@/ui/common/common-components'
+import { useStyle } from '@/ui/context/StyleContext'
+
+const STYLE_ID = 'page_account_info'
 
 export default function Withdraw() {
   const router = useRouter()
@@ -17,6 +20,8 @@ export default function Withdraw() {
   const studentHistory = useStudentHistory().payload
   const { loginId, studyEndDay } = useStudentInfo()
   const { customerId } = useCustomerInfo()
+
+  const style = useStyle(STYLE_ID)
 
   let isWithdrawOn = studentHistory.length === 0 && studyEndDay <= 0
   if (!isWithdrawOn) {
@@ -34,9 +39,9 @@ export default function Withdraw() {
     }
   }
   return (
-    <div>
-      <button
-        style={{ color: 'red' }}
+    <div className={style.widthdraw}>
+      <div
+        className={style.btn_link}
         onClick={() => {
           if (isWithdrawOn) {
             setShowWithdrawPopup(true)
@@ -46,8 +51,8 @@ export default function Withdraw() {
             )
           }
         }}>
-        withdraw
-      </button>
+        회원 탈퇴 및 계정 삭제
+      </div>
       {isShowWithdrawPopup && (
         <WithdrawCauseModal
           onWithdrawClick={(memo: string) => {
@@ -146,6 +151,8 @@ function WithdrawCauseModal({
   const isWithdrawActive =
     !!withdrawCause && (withdrawCause !== '9' || !!etcCause)
 
+  const style = useStyle(STYLE_ID)
+
   return (
     <Modal
       compact
@@ -153,13 +160,13 @@ function WithdrawCauseModal({
       title={'회원 탈퇴'}
       onClickDelete={() => onCancelClick && onCancelClick()}
       onClickLightbox={() => onCancelClick && onCancelClick()}>
-      <div style={{ padding: '16px' }}>
+      <div className={style.withdraw_cause_modal}>
         {!isShowSafeInput ? (
           <>
-            <div>
-              <h3>탈퇴하고자 하는 이유를 알려주세요.</h3>
+            <div className={style.survey}>
+              <div className={style.label}>탈퇴 사유</div>
               <select onChange={(e) => onCauseSelect(e.target.value)}>
-                <option value={''}>보기에서 선택해주세요.</option>
+                <option value={''}>선택</option>
                 {withdrawCauseMap.map(({ key, value }) => {
                   return (
                     <option key={key} value={key}>
@@ -169,73 +176,65 @@ function WithdrawCauseModal({
                 })}
               </select>
             </div>
+          
             {isOnEtcCause && (
-              <div>
+              <div className={style.input_field}>
                 <input
                   placeholder="기타 사유를 입력해주세요."
                   onChange={(e) => setEtcCause(e.target.value)}
                 />
               </div>
             )}
-            <div>
-              <br />
+            <div className={style.buttons}>
               <button
                 disabled={!isWithdrawActive}
-                style={{
-                  display: 'inline-block',
-                  color: isWithdrawActive ? 'red' : 'gray',
-                }}
+                className={style.btn_light}
                 onClick={() => {
                   if (isWithdrawActive) {
                     setShowSafeInput(true)
                   }
-                }}>
-                탈퇴하겠습니다.
-              </button>
-              <button
-                style={{ display: 'inline-block' }}
-                onClick={() => onCancelClick && onCancelClick()}>
-                다시 생각해 보겠습니다.
-              </button>
+                }}>탈퇴하기</button>
+              <button className={style.btn_light} onClick={() => {onCancelClick && onCancelClick()}}>취소</button>
             </div>
           </>
         ) : (
           <>
-            <div>
+            <div className={style.message_container}>
               <div>
-                탈퇴한 후에는 되돌릴 수 없으니 신중하게 생각하고 아래 보안코드를
-                입력해주세요.
+                ❗️회원 탈퇴를 완료하려면 아래 보안 코드를 입력해 주세요. 회원 탈퇴가 완료되면 사용자의 계정과 학습 데이터가 영구적으로 삭제됩니다. 이 작업은 완료후 절대로 되돌릴 수 없습니다.
               </div>
-              <div>보안코드: {saftNumber}</div>
-              <div>
+              <div>보안 코드: {saftNumber}</div>
+              <div className={style.input_field}>
                 <input
                   placeholder="화면에 보이는 보안코드를 입력해주세요."
                   onChange={(e) => setUserSafeNumber(e.target.value)}
                 />
               </div>
-              <button
-                disabled={saftNumber !== userSafeNumber}
-                style={{
-                  display: 'inline-block',
-                  color: saftNumber === userSafeNumber ? 'red' : 'gray',
-                }}
-                onClick={() => {
-                  if (isWithdrawActive) {
-                    const item = withdrawCauseMap.filter(
-                      (item) => item.key === withdrawCause,
-                    )[0]
-                    const cause = `사유 : ${item.key !== '9' ? `${item.value}` : `${item.value}: ${etcCause}`}`
+              <div className={style.buttons}>
+                <button
+                  disabled={saftNumber !== userSafeNumber}
+                  className={style.btn_light}
+                  style={{
+                    color: saftNumber === userSafeNumber ? 'red' : '',
+                  }}
+                  onClick={() => {
+                    if (isWithdrawActive) {
+                      const item = withdrawCauseMap.filter(
+                        (item) => item.key === withdrawCause,
+                      )[0]
+                      const cause = `사유 : ${item.key !== '9' ? `${item.value}` : `${item.value}: ${etcCause}`}`
 
-                    onWithdrawClick && onWithdrawClick(cause)
-                  }
-                }}>
-                확인
-              </button>
-              <button
-                style={{ display: 'inline-block' }}
-                onClick={() => onCancelClick && onCancelClick()}>
-                다시 생각해 보겠습니다.
-              </button>
+                      onWithdrawClick && onWithdrawClick(cause)
+                    }
+                  }}>
+                  계정 영구 삭제
+                </button>
+                <button
+                  className={style.btn_light}
+                  onClick={() => onCancelClick && onCancelClick()}>
+                  취소
+                </button>
+              </div>
             </div>
           </>
         )}

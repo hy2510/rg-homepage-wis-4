@@ -4,8 +4,8 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/home/main",
-  "name": "RG(베타버전)",
-  "short_name": "RG(베타버전)",
+  "name": "RG(WEB)",
+  "short_name": "RG(WEB)",
   "icons": [
     {
       "src": "faviconS.png",

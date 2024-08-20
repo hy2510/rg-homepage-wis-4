@@ -1,11 +1,12 @@
 .hall_off_fame_rank {
   display: flex;
   flex-direction: column;
-  gap: var(--space-m);
+  gap: var(--space-l);
   .group_comment {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-m);
+    margin-top: 10px;
     .txt_comment {
       color: var(--gray1);
     }

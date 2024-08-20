@@ -93,24 +93,26 @@ export default function Page() {
         />
       </div>
       <div className={style.group_interview_thumbnails}>
-        <div className={style.txt_label}>인터뷰 모아보기</div>
+        <Link href={'https://www.youtube.com/playlist?list=PLbIV2Wes7jczKZkbqMaIjHgSHwDLEuaFO'} target='_blank'>
+          <div className={style.txt_label}>RG 인터뷰 모아보기</div>
+        </Link>
         <div className={style.list_thumbnails}>
           <InterviewCard2
             imgSrc={'/src/sample-images/interview_thumbnail_image_1.png'}
-            txt_sub={"리딩게이트 명예의 전당 'Titanium(티타늄)'등급"}
-            txt_title={"'천소현 학생' 특별 인터뷰"}
+            txt_sub={"리딩게이트 명예의 전당"}
+            txt_title={"Titanium(티타늄) 등급 특별 인터뷰"}
             txt_link={'카페글 바로 보기'}
             href={
-              'https://www.youtube.com/playlist?list=PLbIV2Wes7jczKZkbqMaIjHgSHwDLEuaFO'
+              'https://cafe.naver.com/readinggatecafe?iframe_url=/ArticleList.nhn%3Fsearch.clubid=29561033%26search.menuid=31%26search.boardtype=W'
             }
           />
           <InterviewCard2
             imgSrc={'/src/sample-images/interview_thumbnail_image_2.png'}
-            txt_sub={'2023 리딩게이트 슈퍼스타 선발대회 슈퍼스타상'}
-            txt_title={'Presenter 김지율'}
-            txt_link={'카페글 바로 보기'}
+            txt_sub={'리딩게이트 슈퍼스타 선발대회'}
+            txt_title={'슈퍼스타상 수상자 인터뷰'}
+            txt_link={'블로그글 바로 보기'}
             href={
-              'https://cafe.naver.com/readinggatecafe?iframe_url=/ArticleList.nhn%3Fsearch.clubid=29561033%26search.menuid=31%26search.boardtype=W'
+              'https://blog.naver.com/PostList.naver?blogId=readinggate_official&from=postList&categoryNo=14'
             }
           />
         </div>

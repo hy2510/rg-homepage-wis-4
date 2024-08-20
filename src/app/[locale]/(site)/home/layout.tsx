@@ -108,43 +108,53 @@ export default function Layout({ children }: { children?: ReactNode }) {
   }
 
   return (
-    <div className={style.home}>
-      <div className="container" style={{ paddingBottom: 0, paddingTop: 0 }}>
-        {isLogin && paymentMessage && (
-          <AlertBar>
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                gap: '20px',
-                color: 'red',
-              }}>
-              <div>{paymentMessage}</div>
-              {studyState === 'NEED_PAYMENT' && isPaymentable && (
-                <div>
-                  <Link href={SITE_PATH.HOME.MEMBERSHIP_PAYMENT}>
-                    <b>{t('t193')}</b>
-                  </Link>
+    <>
+      <div className={style.home}>
+        <div className="container" style={{ paddingBottom: 0, paddingTop: 0 }}>
+          {isLogin && paymentMessage && (
+            <>
+              <div style={{paddingTop: '15px',}}></div>
+              <AlertBar>
+                <div
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '20px',
+                    color: 'red',
+                  }}>
+                  <div>{paymentMessage}</div>
+                  {studyState === 'NEED_PAYMENT' && isPaymentable && (
+                    <div>
+                      <Link href={SITE_PATH.HOME.MEMBERSHIP_PAYMENT}>
+                        <b>{t('t193')}</b>
+                      </Link>
+                    </div>
+                  )}
+                  {studyState === 'PAUSED' && (
+                    <div>
+                      <Link href={SITE_PATH.ACCOUNT.INFO}>
+                        <b>{'일시중지 해제'}</b>
+                      </Link>
+                    </div>
+                  )}
                 </div>
-              )}
-              {studyState === 'PAUSED' && (
-                <div>
-                  <Link href={SITE_PATH.ACCOUNT.INFO}>
-                    <b>{'일시중지 해제'}</b>
-                  </Link>
-                </div>
-              )}
-            </div>
-          </AlertBar>
+              </AlertBar>
+            </>
+          )}
+        </div>
+        {connectMainRgNews ? (
+          <></>
+        ) : (
+          <HomeNavBar isDisableMembership={!isPaymentable} />
         )}
+        {children}
       </div>
-      {connectMainRgNews ? (
-        <></>
-      ) : (
-        <HomeNavBar isDisableMembership={!isPaymentable} />
-      )}
-      {children}
-    </div>
+      <div className={style.chatbot_area}>
+        <div className={style.chat_icon} style={{backgroundImage: `url('/src/images/@chatbot-icon/kakao_channer_talk_icon.png')`}}></div>
+        <div className={style.chat_icon} style={{backgroundImage: `url('/src/images/@chatbot-icon/chatbot_icon_pri3.png')`}}></div>
+        <div className={style.chat_icon} style={{backgroundImage: `url('/src/images/@chatbot-icon/chatbot_icon_pri.png')`}}></div>
+      </div>
+    </>
   )
 }

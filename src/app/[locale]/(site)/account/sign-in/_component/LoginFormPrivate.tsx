@@ -51,59 +51,61 @@ export default function LoginFormPrivate({
 
   return (
     <>
-      <div className={style.log_in_personal_member}>
-        {customHeader}
-        <TextField
-          ref={loginIdInputRef}
-          id={'user-id'}
-          hint={t('t266')}
-          onTextChange={(text) => setLoginId(text)}
-          value={loginId}
-          onKeyDown={(e) => {
-            if (e.key.toLowerCase() === 'enter') {
+      <div className={style.log_in_box}>
+        <div className={style.log_in_personal_member}>
+          {customHeader}
+          <TextField
+            ref={loginIdInputRef}
+            id={'user-id'}
+            hint={t('t266')}
+            onTextChange={(text) => setLoginId(text)}
+            value={loginId}
+            onKeyDown={(e) => {
+              if (e.key.toLowerCase() === 'enter') {
+                if (!isLoginDisabled) {
+                  requestLogin(loginId, password)
+                } else if (loginId && !password) {
+                  passwordInputRef?.current?.focus()
+                }
+              }
+            }}
+          />
+          <TextField
+            ref={passwordInputRef}
+            id={'user-passowrd'}
+            hint={t('t202')}
+            password
+            value={password}
+            onTextChange={(text) => setPassword(text)}
+            onKeyDown={(e) => {
+              if (e.key.toLowerCase() === 'enter') {
+                if (!isLoginDisabled) {
+                  requestLogin(loginId, password)
+                } else if (!loginId && password) {
+                  loginIdInputRef?.current?.focus()
+                }
+              }
+            }}
+          />
+          <Button
+            shadow={!isLoginDisabled}
+            color={isLoginDisabled ? 'gray' : 'red'}
+            onClick={() => {
               if (!isLoginDisabled) {
                 requestLogin(loginId, password)
-              } else if (loginId && !password) {
-                passwordInputRef?.current?.focus()
               }
-            }
-          }}
-        />
-        <TextField
-          ref={passwordInputRef}
-          id={'user-passowrd'}
-          hint={t('t202')}
-          password
-          value={password}
-          onTextChange={(text) => setPassword(text)}
-          onKeyDown={(e) => {
-            if (e.key.toLowerCase() === 'enter') {
-              if (!isLoginDisabled) {
-                requestLogin(loginId, password)
-              } else if (!loginId && password) {
-                loginIdInputRef?.current?.focus()
-              }
-            }
-          }}
-        />
-        <Button
-          shadow={!isLoginDisabled}
-          color={isLoginDisabled ? 'gray' : 'red'}
-          onClick={() => {
-            if (!isLoginDisabled) {
-              requestLogin(loginId, password)
-            }
-          }}>
-          {t('t214')}
-        </Button>
-        <div className={style.row_box}>
-          <Link href={SITE_PATH.ACCOUNT.FORGOT_ID}>{t('t225')}</Link>
-          <Link href={SITE_PATH.ACCOUNT.FORGOT_PASSWORD}>{t('t247')}</Link>
-          {isAppType && (
-            <Link href={SITE_PATH.ACCOUNT.SIGN_UP}>{t('t267')}</Link>
-          )}
+            }}>
+            {t('t214')}
+          </Button>
+          <div className={style.row_box}>
+            <Link href={SITE_PATH.ACCOUNT.FORGOT_ID}>{t('t225')}</Link>
+            <Link href={SITE_PATH.ACCOUNT.FORGOT_PASSWORD}>{t('t247')}</Link>
+            {isAppType && (
+              <Link href={SITE_PATH.ACCOUNT.SIGN_UP}>{t('t267')}</Link>
+            )}
+          </div>
+          <div className={style.comment}>{`❗️ ${t('t269')}`}</div>
         </div>
-        <div className={style.comment}>{`❗️ ${t('t269')}`}</div>
       </div>
     </>
   )

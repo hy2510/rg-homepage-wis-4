@@ -1,7 +1,7 @@
 // 내보내기(일괄작업) 콘테이너
 .export_mode_panel {
   position: fixed;
-  bottom: 80px;
+  bottom: calc(80px + env(safe-area-inset-bottom));
   left: 0;
   z-index: 10;
   width: 100%;
@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   .export_mode_panel_container {
-    width: 100vw;
+    width: calc(100vw - 10px);
     background-color: var(--white);
     border: 2px solid var(--red);
     border-radius: var(--round-l);
@@ -39,7 +39,7 @@
         max-height: 42px;
         display: flex;
         align-items: center;
-        max-width: calc(100vw - 160px);
+        max-width: calc(100vw - 180px);
         width: 100%;
         overflow-x: auto;
         overflow-y: hidden;
