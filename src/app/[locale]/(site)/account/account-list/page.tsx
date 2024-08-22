@@ -133,11 +133,11 @@ export default function Page() {
 
   return (
     <main className={style.account_list}>
-      {isInstallable && (
+      {/* {isInstallable && (
         <button onClick={handleInstallClick}>
           Install App
         </button>
-      )}
+      )} */}
       <div className={style.catchphrase}>
         <div className={style.brand_name}>{t('t206')}</div>
         <div className={style.sentence}>{t('t207')}</div>

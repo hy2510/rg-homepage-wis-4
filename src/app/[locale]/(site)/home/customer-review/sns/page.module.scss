@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-m);
-  min-height: 450px;
+  min-height: 520px;
   @media (prefers-color-scheme: dark) {
     background-color: rgba($color: #ffffff, $alpha: 0.15);
   }

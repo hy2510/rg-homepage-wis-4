@@ -25,11 +25,61 @@ import {
   RgPostContainer,
   RgPostItem,
 } from '@/ui/modules/home-main-components/home-main-rg-post'
+import { useEffect, useState } from 'react'
 
 const STYLE_ID = 'page_main'
 
 export default function Main() {
   const style = useStyle(STYLE_ID)
+
+  // PWA 설치 메세지 띄우기 -->
+  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+  const [isInstallable, setIsInstallable] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleAppInstalled = () => {
+      console.log('PWA installed');
+      setIsInstallable(false);
+    };
+
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      const promptEvent = deferredPrompt as WindowEventMap['beforeinstallprompt'];
+      promptEvent.prompt();
+      const choiceResult = await promptEvent.userChoice;
+
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+
+      setDeferredPrompt(null);
+      setIsInstallable(false);
+    }
+  };
+  // <-- PWA 설치 메세지 띄우기
 
   const { payload: mainData } = useOnLoadMain()
   const { main } = useSiteBlueprint()
@@ -116,6 +166,19 @@ export default function Main() {
           {main.isHidodoBanner && mainData.adImageBanner.length > 0 && (
             <>
               <Margin height={10} />
+              {isInstallable && (
+                <>
+                  <div onClick={() => {handleInstallClick()}}>
+                    <AdBannerType1
+                      title={''}
+                      href={""}
+                      imgSrc={"/src/images/@home/img_pwa_install.png"}
+                      width={640}
+                      height={640}
+                    />
+                  </div>
+                </>
+              )}
               {mainData.adImageBanner.map((banner) => {
                 return (
                   <AdBannerType1

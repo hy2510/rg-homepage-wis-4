@@ -617,6 +617,10 @@
     border: 0 none;
     outline: 0 none;
     padding: var(--space-xxs) 0;
+    @media (prefers-color-scheme: dark) {
+      color: var(--white);
+      background-color: var(--black);
+    }
   }
 }
 

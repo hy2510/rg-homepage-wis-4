@@ -22,7 +22,7 @@ export default function LoginFormIntro({onClickNav}:{onClickNav?: (nav: 'P'|'G')
             <Image src={'/src/images/@account/symbol_icon_indi.png'} width={60} height={66} alt='' />
           </div>
           <div className={style.txt_1}>개인 회원</div>
-          <div className={style.txt_2}>'일반' 회원인 경우 로그인 또는 가입하려면 선택해 주세요.</div>
+          <div className={style.txt_2}>'일반' 회원인 경우, 로그인 또는 가입하려면 선택해 주세요.</div>
         </div>
         <div className={style.card} onClick={() => onClickNav && onClickNav('G')}>
           <div className={style.symbol_image}>
