@@ -54,21 +54,35 @@ export default function Layout({ children }: { children?: ReactNode }) {
   }) => {
     return (
       <div className={`${style.home_nav_bar}`}>
+        {/* 공통 */}
         <HomeNavItem
           name={t('t317')}
           href={SITE_PATH.HOME.MAIN}
           active={pathname.indexOf(SITE_PATH.HOME.MAIN) !== -1}
         />
+
+        {/* 학교, 학원 - 소개 */}
+        <HomeNavItem
+          name={'소개'}
+          href={SITE_PATH.HOME.ABOUT_TO_SCHOOL}
+          active={pathname.indexOf(SITE_PATH.HOME.ABOUT_TO_SCHOOL) !== -1}
+        />
+
+        {/* 개인, 학교 - 활용수기 */}
+        <HomeNavItem
+          name={t('t319')}
+          href={SITE_PATH.HOME.CUSTOMER_INTERVIEW}
+          active={pathname.indexOf(SITE_PATH.HOME.CUSTOMER_INTERVIEW) !== -1}
+        />
+
+        {/* 개인, 학교 - 명예의전당 게시판 */}
         {/* <HomeNavItem
           name={t('t318')}
           href={'hall-of-fame'}
           active={connectHallOfFame}
         /> */}
-        <HomeNavItem
-          name={t('t319')}
-          href={SITE_PATH.HOME.CUSTOMER_INTERVIEW}
-          active={pathname.indexOf('/customer-review') !== -1}
-        />
+
+        {/* 개인 - RG멤버십 */}
         {!isDisableMembership && (
           <HomeNavItem
             name={t('t320')}
@@ -76,6 +90,22 @@ export default function Layout({ children }: { children?: ReactNode }) {
             active={pathname.indexOf('/rg-membership') !== -1}
           />
         )}
+
+        {/* 개인 - 이용안내 */}
+        <HomeNavItem
+          name={'이용안내'}
+          href={SITE_PATH.HOME.USER_GUIDE_PERSONAL}
+          active={pathname.indexOf(SITE_PATH.HOME.USER_GUIDE_PERSONAL) !== -1}
+        />
+
+        {/* 학교, 학원 - 이용안내 */}
+        <HomeNavItem
+          name={'이용안내'}
+          href={SITE_PATH.HOME.USER_GUIDE_GROUP}
+          active={pathname.indexOf(SITE_PATH.HOME.USER_GUIDE_GROUP) !== -1}
+        />
+
+        {/* 공통 - 고객지원 */}
         <HomeNavItem
           name={t('t321')}
           href={CUSTOMER_CENTER_URL}

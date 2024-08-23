@@ -170,6 +170,8 @@ import page_quick_view_m from '@/app/[locale]/(site)/review/(quick-view)/page_m.
 import page_detailed_view from '@/app/[locale]/(site)/review/detailed-view/page.module.scss'
 import page_detailed_view_m from '@/app/[locale]/(site)/review/detailed-view/page_m.module.scss'
 import page_trial from '@/app/[locale]/(site)/trial/page.module.scss'
+import page_about_to_school from '@/app/[locale]/(site)/home/about-to-school/page.module.scss'
+import page_about_to_school_m from '@/app/[locale]/(site)/home/about-to-school/page_m.module.scss'
 
 export type CssStyle = { readonly [key: string]: string }
 export default function findStyle(id: string): {
@@ -384,6 +386,8 @@ export default function findStyle(id: string): {
       return { pc: page_kids_prek, mobile: page_kids_prek_m }
     case 'page_ticket':
       return { pc: page_ticket, mobile: page_ticket_m }
+    case 'page_about_to_school':
+      return { pc: page_about_to_school, mobile: page_about_to_school_m }
     default:
       throw new Error('CSS Index Not Found.')
   }

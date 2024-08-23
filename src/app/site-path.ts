@@ -19,6 +19,9 @@ const HOME = {
   MEMBERSHIP_REFUND_POLICY: '/home/rg-membership/refund-policy',
   MEMBERSHIP_SERVICE_TERM: '/home/rg-membership/terms-of-service',
   MEMBERSHIP_PRIVACY_POLICY: '/home/rg-membership/privacy-policy',
+  USER_GUIDE_PERSONAL: '/home/user-guide/personal-member',
+  USER_GUIDE_GROUP: '/home/user-guide/group-member',
+  ABOUT_TO_SCHOOL: '/home/about-to-school',
 }
 const ACCOUNT = {
   MAIN: '/account/account-list',

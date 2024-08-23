@@ -2,7 +2,7 @@ import { getCustomerWithHeader } from '@/authorization/server/nextjsHeaderCustom
 import { NextRequest } from 'next/server'
 import Home from '@/repository/server/home'
 import { RouteResponse, executeRequestAction } from '../_util'
-import getMainData from './main-sample'
+import getMainData from './main-sample-school'
 
 type SlideBanner = {
   SlidingBannerId: string
