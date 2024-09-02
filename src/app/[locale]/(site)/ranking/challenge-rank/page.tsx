@@ -157,7 +157,7 @@ const UserEngagementStatus = ({
 
   return (
     <div className={style.user_engagement_status}>
-      <div className={style.user_symbol}>
+      {/* <div className={style.user_symbol}>
         {0 < userRank && userRank < 1000 && (
           <div className={style.user_rank}>
             <div className={style.txt_rank}>{userRank}</div>
@@ -166,8 +166,9 @@ const UserEngagementStatus = ({
         <div className={style.user_avatar}>
           <Image alt="" src={userAvatar} width={100} height={100} />
         </div>
-      </div>
-      <ColumnBox label={t('t289')} contents={studentName} />
+      </div> */}
+      <ColumnBox label={'순위'} contents={userRank == 0 ? '###' : userRank} />
+      {/* <ColumnBox label={t('t289')} contents={studentName} /> */}
       <ColumnBox label={t('t394')} contents={`${studyDay}`} />
       <ColumnBox label={t('t160')} contents={`${earnPoints}`} />
       <ColumnBox label={t('t395')} contents={`${completed}`} />
@@ -193,7 +194,7 @@ const Leaderboard = ({ rankList }: { rankList: RankReadingking[] }) => {
         return (
           <TableRow
             key={`Rank_${a.num}_${a.studentId}`}
-            rank={a.num}
+            rank={a.totalRank}
             studentAvatar={a.imgAvatarRankingList}
             studyDay={a.studyDay}
             studentName={a.studentName}
@@ -211,7 +212,7 @@ const ColumnBox = ({
   contents,
 }: {
   label: string
-  contents: string
+  contents: any
 }) => {
   const style = useStyle(STYLE_ID)
 

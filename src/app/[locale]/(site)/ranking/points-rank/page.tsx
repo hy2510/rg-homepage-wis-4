@@ -76,7 +76,7 @@ function PointRank() {
       contents,
     }: {
       label: string
-      contents: string
+      contents: any
     }) => {
       return (
         <div className={style.column_box}>
@@ -88,7 +88,7 @@ function PointRank() {
 
     return (
       <div className={style.user_engagement_status}>
-        <div className={style.user_symbol}>
+        {/* <div className={style.user_symbol}>
           {userRank >= 1 && userRank < 1000 && (
             <div className={style.user_rank}>
               <div className={style.txt_rank}>{userRank}</div>
@@ -97,8 +97,9 @@ function PointRank() {
           <div className={style.user_avatar}>
             <Image alt="" src={userAvatar} width={100} height={100} />
           </div>
-        </div>
-        <ColumnBox label={t('t289')} contents={studentName} />
+        </div> */}
+        <ColumnBox label={'순위'} contents={userRank == 0 ? '###' : userRank} />
+        {/* <ColumnBox label={t('t289')} contents={studentName} /> */}
         <ColumnBox label={t('t160')} contents={earnPoints.toString()} />
         <ColumnBox label={t('t395')} contents={completed.toString()} />
       </div>
@@ -149,7 +150,8 @@ function PointRank() {
                     : ''
             }`}>
             <Image alt="" src={studentAvatar || ''} width={60} height={60} />
-            <div className={style.txt_student_name}>{studentName}</div>
+            {/* 학년의 경우 학교회원만 표시 */}
+            <div className={style.txt_student_name}>{studentName}<span>1학년</span></div>
           </div>
           <div className={style.txt_earn_points}>
             {earnPoints && NumberUtils.toRgDecimalPoint(earnPoints)}
@@ -171,7 +173,7 @@ function PointRank() {
           return (
             <TableRow
               key={`Rank_${a.no}`}
-              rank={a.no}
+              rank={a.totalRank}
               studentAvatar={a.imgRankingList2}
               studentName={a.name}
               earnPoints={a.rgPoint}
@@ -208,7 +210,7 @@ function PointRank() {
           <SubTitle>{t('t405')}</SubTitle>
           <UserEngagementStatus
             userAvatar={rankUser.imgRankingList2}
-            userRank={rankUser.no}
+            userRank={rankUser.totalRank}
             studentName={rankUser.name}
             earnPoints={rankUser.rgPoint}
             completed={rankUser.bookCount}

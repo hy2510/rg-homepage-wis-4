@@ -686,7 +686,8 @@ function SpeakList({ isReportLoading }: { isReportLoading: boolean }) {
                   imgSrc={a.surfaceImagePath}
                   bookCode={a.levelName}
                   title={a.title}
-                  studyDate={a.completeDate}
+                  // studyDate={a.completeDate}
+                  studyDate={a.speakDate}
                   totalScore={a.average}
                   isPassed={a.speakPassYn}
                   completedInfo={''}

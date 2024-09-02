@@ -96,6 +96,11 @@
   .contents {
     font-size: var(--text-xl);
     font-weight: 600;
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -112,7 +117,7 @@
     background-color: var(--white);
     position: sticky;
     top: calc(78px + 48px);
-    z-index: 3;
+    z-index: 2;
     @media (prefers-color-scheme: dark) {
       background-color: rgba($color: #ffffff, $alpha: 0.15);
       border-top: 2px solid rgba($color: #ffffff, $alpha: 0.15);

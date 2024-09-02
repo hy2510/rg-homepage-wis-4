@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { useStudentAvatar } from '@/client/store/student/avatar/selector'
 import { useStudentContinuousStudy } from '@/client/store/student/continuous-study/selector'
+import { useAchieveSuccessiveStudy } from '@/client/store/achieve/successive-study/selector'
 import { useStudentIsLogin } from '@/client/store/student/info/selector'
 import {
   useScreenMode,
@@ -108,6 +109,8 @@ const MENU = {
 export default function Gheader() {
   const style = useStyle(STYLE_ID)
 
+  const successiveStudyList = useAchieveSuccessiveStudy().payload
+
   const studyLearning = useStudentDailyLearning().payload
   const studyLevel = studyLearning.settingLevelName
 
@@ -186,6 +189,7 @@ export default function Gheader() {
             isShowSignUp={isShowSignUp}
             onClick={onShowModal}
             studyLevel={studyLevel}
+            successiveStudyList={successiveStudyList}
           />
         </div>
       </div>
@@ -215,6 +219,7 @@ function GNBMenu({
   isShowSignUp,
   onClick,
   studyLevel,
+  successiveStudyList,
 }: {
   pathname: string
   isLogOn: boolean
@@ -222,11 +227,12 @@ function GNBMenu({
   isShowSignUp?: boolean
   onClick: (name: ModalViewNameType) => void
   studyLevel?: string
+  successiveStudyList?: any
 }) {
   if (isLogOn) {
     return (
       <>
-        <GnbLogOn pathname={pathname} isMobile={isMobile} onClick={onClick} studyLevel={studyLevel} />
+        <GnbLogOn pathname={pathname} isMobile={isMobile} onClick={onClick} studyLevel={studyLevel} successiveStudyList={successiveStudyList} />
         {isMobile && <GnbLogOnMobile pathname={pathname} />}
       </>
     )
@@ -249,11 +255,13 @@ function GnbLogOn({
   isMobile,
   onClick,
   studyLevel,
+  successiveStudyList,
 }: {
   pathname: string
   isMobile?: boolean
   onClick: (name: ModalViewNameType) => void
   studyLevel?: string
+  successiveStudyList?: any
 }) {
   const style = useStyle(STYLE_ID)
 
@@ -305,6 +313,7 @@ function GnbLogOn({
           onClick={() => {
             onClick('streak')
           }}
+          successiveStudyList={successiveStudyList}
         />
         <OptionButton
           imgSrc="/src/images/@global-header/quest.svg"
@@ -323,6 +332,8 @@ function GnbLogOn({
       /> 
       */}
         <div className={style.user_avatar_area}>
+          {/* 명예의 전당 수상자 왕관 : titanium, platinum, gold, silver, bronze */}
+          <div className={`${style.vip} ${style.platinum}`}></div>
           <OptionButton
             isAvatar
             imgSrc={userAvatar.imageCircle}
@@ -541,6 +552,7 @@ const OptionButton = ({
   isNotice,
   onClick,
   imgSrc = '',
+  successiveStudyList,
 }: {
   isCalendar?: boolean
   isStreak?: boolean
@@ -548,6 +560,7 @@ const OptionButton = ({
   isNotice?: boolean
   onClick: () => void
   imgSrc?: string
+  successiveStudyList?: any
 }) => {
   const style = useStyle(STYLE_ID)
 
@@ -570,6 +583,20 @@ const OptionButton = ({
   const mon = monthNames[date.getMonth()]
 
   const continuousDay = useStudentContinuousStudy()
+  
+  // 마지막 어워드 학습일수
+  const lastStraightDayCount = successiveStudyList && successiveStudyList.length > 0 ? successiveStudyList[successiveStudyList.length - 1].straightDayCount : 0
+  
+  // 마지막 어워드를 획득한 날짜
+  const lastAchievedDate = successiveStudyList && successiveStudyList.length > 0 ? successiveStudyList[successiveStudyList.length - 1].achievedDate : 0
+
+  // 오늘 날짜
+  const todays = new Date();
+  const year = todays.getFullYear();
+  const month = String(todays.getMonth() + 1).padStart(2, '0');
+  const day = String(todays.getDate()).padStart(2, '0');
+
+  const formattedDate = `${year}${month}${day}`;
 
   return (
     <>
@@ -593,7 +620,7 @@ const OptionButton = ({
       ) : isStreak ? (
         <div className={style.option_button} onClick={onClick}>
           <div className={style.streak}>
-            {!continuousDay ? (
+            {!continuousDay || (lastStraightDayCount == continuousDay && lastAchievedDate != formattedDate) ? (
               <>
                 <div className={style.txt_days}></div>
                 <Image

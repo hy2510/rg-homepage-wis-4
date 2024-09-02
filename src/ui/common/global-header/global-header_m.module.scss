@@ -325,6 +325,32 @@
 
 .user_avatar_area {
   position: relative;
+  .vip {
+    height: 15px;
+    position: absolute;
+    top: -6px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    &.titanium {
+      background-image: url('/src/images/@ranking/hall-of-fame/titanium.png');
+    }
+    &.platinum {
+      background-image: url('/src/images/@ranking/hall-of-fame/platinum.png');
+    }
+    &.gold {
+      background-image: url('/src/images/@ranking/hall-of-fame/gold.png');
+    }
+    &.silver {
+      background-image: url('/src/images/@ranking/hall-of-fame/silver.png');
+    }
+    &.bronze {
+      background-image: url('/src/images/@ranking/hall-of-fame/bronze.png');
+    }
+  }
   .user_level {
     position: absolute;
     left: 8px;

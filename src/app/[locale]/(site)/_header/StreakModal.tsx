@@ -73,11 +73,47 @@ export function StreakModal({
 
   const t175 = t('t175')
 
+  // 연속학습 어워드 카운터
+  const useTotalStreakCounter = () => {
+    let num
+
+    if (continuousDay >= 1 && continuousDay <= 20) {
+      num = continuousDay
+    } else if (continuousDay % 100 === 0) {
+      num = continuousDay
+    } else {
+      num = continuousDay % 20
+    }
+
+    const isStreak = continuousDay !== 0
+    const streakStatus = num.toString().slice(-1) !== '0' || Number(num) % 10 === 0 && Number(num) % 20 !== 0 ? '+' + (num.toString()) : continuousDay
+    const getAward = continuousDay >= 20 && continuousDay % 20 === 0
+
+    return {isStreak, streakStatus, getAward}
+  }
+
+  const totalStreakCounter = useTotalStreakCounter()
+
+  // 마지막 어워드 학습일수
+  const lastStraightDayCount = successiveStudyList && successiveStudyList.length > 0 ? successiveStudyList[successiveStudyList.length - 1].straightDayCount : 0
+  
+  // 마지막 어워드를 획득한 날짜
+  const lastAchievedDate = successiveStudyList && successiveStudyList.length > 0 ? successiveStudyList[successiveStudyList.length - 1].achievedDate : 0
+
+  // 오늘 날짜
+  const todays = new Date();
+  const year = todays.getFullYear();
+  const month = String(todays.getMonth() + 1).padStart(2, '0');
+  const day = String(todays.getDate()).padStart(2, '0');
+
+  const formattedDate = `${year}${month}${day}`;
+
   return (
     <Modal
       compact
       header
-      title={t('t171')}
+      // title={t('t171')}
+      title={`연속 학습 어워드`}
       onClickDelete={() => {
         _viewStreakModal && _viewStreakModal(false)
       }}
@@ -89,7 +125,8 @@ export function StreakModal({
           <>
             <div className={style.streak_modal_body}>
               <div className="mg-bottom-m">
-                <AlertBar>{t('t172')}</AlertBar>
+                {/* <AlertBar>{t('t172')}</AlertBar> */}
+                <AlertBar>연속 학습은 20일간 매일 1권 이상 학습 시 어워드와 함께 누적되며, 실패 시 마지막 어워드의 날수부터 다시 시작할 수 있어요.</AlertBar>
               </div>
               {/* 연속학습 달성 기록이 있을 때 */}
               {successiveStudyList && successiveStudyList.length > 0 ? (
@@ -119,11 +156,11 @@ export function StreakModal({
                         />
                       )
                     })}
-                  {continuousDay >= 20 && (
+                  {/* {continuousDay >= 20 && (
                     <div className={style.start_point}>
                       <div className={style.txt_p}>{t('t498')}!</div>
                     </div>
-                  )}
+                  )} */}
                 </>
               ) : (
                 <>
@@ -137,21 +174,50 @@ export function StreakModal({
               )}
             </div>
             <div className={style.streak_modal_bottom}>
-              <div className={style.streak_status}>
-                <div className={style.txt_l}>
-                  {t('t174')}
-                  <span className="color-blue">{t('t171')}</span>
-                </div>
-                <div
-                  className={`${style.score}${continuousDay > 0 ? ` ${style.active}` : ''}${continuousDay > 0 ? ' heartbeat' : ''}`}>
-                  <span>{continuousDay}</span>
-                </div>
-                <div className={style.txt_l}>
-                  <span
-                    className="color-blue"
-                    dangerouslySetInnerHTML={{ __html: t175 }}></span>
-                </div>
-              </div>
+              {/* 연속학습일이 0이거나, 마지막 날짜(예: 9/7)의 어워드 학습일수와 다른 날짜(예:9/8)의 연속 학습일수가 같을 때는 하단 바를 안보여줌 */}
+              {continuousDay === 0 || (lastAchievedDate != formattedDate && lastStraightDayCount == continuousDay) ? (
+                <></>
+              ) : (
+                totalStreakCounter.getAward ? 
+                <>
+                  <div className={style.streak_status}>
+                    <div className={style.txt_l}>
+                      <span>WOW! 연속 학습</span>
+                    </div>
+                    <div
+                      className={`${style.score} ${style.active} heartbeat`}>
+                      <span>{Number(totalStreakCounter.streakStatus)}</span>
+                    </div>
+                    <div className={style.txt_l}><span>일 달성!</span></div>
+                  </div>
+                </>
+                : (
+                  continuousDay < 20 ?
+                  <>
+                    <div className={style.streak_status}>
+                      <div className={style.txt_l}>
+                        <span>연속 학습 어워드 획득까지</span>
+                      </div>
+                      <div
+                        className={`${style.score}`}>
+                        <span style={{fontSize: '1.15em'}}>D-{20 - (Number(totalStreakCounter.streakStatus) % 20)}</span>
+                      </div>
+                    </div>
+                  </>
+                  : <>
+                      <div className={style.streak_status}>
+                        <div className={style.txt_l}>
+                          <span>누적 연속 학습</span>
+                        </div>
+                        <div
+                          className={`${style.score} ${style.active}`}>
+                          <span style={{fontSize: '1.15em'}}><b>{continuousDay}</b></span>
+                        </div>
+                        <div className={style.txt_l}><span>일</span></div>
+                      </div>
+                    </>
+                )
+              )}
             </div>
           </>
         )}

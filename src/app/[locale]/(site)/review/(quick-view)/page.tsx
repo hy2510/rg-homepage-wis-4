@@ -85,7 +85,11 @@ function HistoryLayout() {
   return (
     <main className={style.quick_view}>
       <div className={style.top}>
-        <Dropdown title={t('t408', { num: range })}>
+        <Dropdown title={`${range === 0 ? '오늘' : t('t408', { num: range })}`}>
+          <DropdownItem onClick={() => onRangeChange(0)}>
+            {/* {t('t408', { num: 1 })} */}
+            {`오늘`}
+          </DropdownItem>
           <DropdownItem onClick={() => onRangeChange(7)}>
             {t('t408', { num: 7 })}
           </DropdownItem>

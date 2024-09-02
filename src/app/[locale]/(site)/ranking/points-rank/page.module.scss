@@ -107,6 +107,11 @@
   .contents {
     font-size: var(--text-xl);
     font-weight: 600;
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -209,6 +214,16 @@
     }
     .txt_student_name {
       font-size: var(--text-xl);
+      min-width: 1px;
+      max-width: 400px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      span {
+        color: var(--gray1);
+        margin-left: var(--space-xs);
+        font-size: 0.75em;
+      }
     }
   }
   .txt_earn_points,
