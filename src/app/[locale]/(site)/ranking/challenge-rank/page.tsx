@@ -188,7 +188,7 @@ const Leaderboard = ({ rankList }: { rankList: RankReadingking[] }) => {
         <div className={style.th_item}>{t('t289')}</div>
         <div className={style.th_item}>{t('t394')}</div>
         <div
-          className={style.th_item}>{`${t('t160')} / ${t('t395')}`}</div>{' '}
+          className={style.th_item}>{`${t('t160')}`}<span>{` /  ${t('t395')} `}</span></div>
       </div>
       {rankList.map((a) => {
         return (
@@ -272,7 +272,7 @@ const TableRow = ({
                 : ''
         }`}>
         <Image alt="" src={studentAvatar || ''} width={60} height={60} />
-        <div className={style.txt_student_name}>{studentName}</div>
+        <div className={style.txt_student_name}>{studentName} <span>하남동부초등학교 4학년</span></div>
       </div>
       <div className={style.txt_present}>{studyDay}</div>
       <div className={style.txt_earn_points}>

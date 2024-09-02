@@ -131,6 +131,11 @@
       -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
     }
+    .th_item {
+      span {
+        display: block;
+      }
+    }
   }
 }
 
@@ -219,6 +224,11 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      span {
+        display: block;
+        font-size: 0.6em;
+        color: var(--gray1);
+      }
     }
   }
   .txt_earn_points,

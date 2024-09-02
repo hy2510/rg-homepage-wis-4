@@ -220,9 +220,10 @@
       overflow: hidden;
       text-overflow: ellipsis;
       span {
+        display: block;
         color: var(--gray1);
-        margin-left: var(--space-xs);
-        font-size: 0.75em;
+        margin-left: 3px;
+        font-size: 0.6em;
       }
     }
   }

@@ -203,6 +203,11 @@
     }
     .txt_student_name {
       font-size: var(--text-xl);
+      span {
+        display: block;
+        font-size: 0.6em;
+        color: var(--gray1);
+      }
     }
   }
   .txt_earn_points,
