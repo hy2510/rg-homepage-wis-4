@@ -395,3 +395,29 @@
     gap: var(--space-s);
   }
 }
+
+.streak_view_method {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  align-items: flex-start;
+  .txt_1 {
+    font-size: var(--text-m);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xxs);
+  }
+  .txt_2 {
+    font-size: var(--text-s);
+  }
+  .txt_3 {
+    font-size: var(--text-s);
+    color: var(--gray1);
+  }
+  .btn_link {
+    cursor: pointer;
+    color: var(--blue);
+    font-size: var(--text-s);
+  }
+}

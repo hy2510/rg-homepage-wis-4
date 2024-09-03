@@ -618,35 +618,42 @@ const OptionButton = ({
           </div>
         </div>
       ) : isStreak ? (
-        <div className={style.option_button} onClick={onClick}>
-          <div className={style.streak}>
-            {!continuousDay || (lastStraightDayCount == continuousDay && lastAchievedDate != formattedDate) ? (
-              <>
-                <div className={style.txt_days}></div>
-                <Image
-                  alt=""
-                  src={'/src/images/@global-header/streak.svg'}
-                  width={26}
-                  height={26}
-                />
-              </>
-            ) : (
-              <>
-                {continuousDay > 5000 ? (
-                  <div className={style.txt_days} style={{ color: '#fff' }}>
-                    Max
+        <>
+          {/* 6차 - 연속 학습 일수 모드일 경우 'style.streak_realistic' 활성화, 클릭시 모달 실행 안함 */}
+          <div className={`${style.option_button} ${style.streak_realistic}`} onClick={onClick}>
+            <div className={style.streak}>
+              {!continuousDay || (lastStraightDayCount == continuousDay && lastAchievedDate != formattedDate) ? (
+                <>
+                  <div className={style.txt_days}></div>
+                  <Image
+                    alt=""
+                    src={'/src/images/@global-header/streak.svg'}
+                    width={28}
+                    height={28}
+                  />
+                </>
+              ) : (
+                <>
+                  {continuousDay > 5000 ? (
+                    <div className={style.txt_days} style={{ color: '#fff' }}>
+                      Max
+                    </div>
+                  ) : (
+                    <div className={style.txt_days} style={{ color: '#fff' }}>
+                      {continuousDay}
+                    </div>
+                  )}
+                  {/* 연속학습 어워드 모드일 경우 활성화, 오늘 학습을 완료한 경우 'style.today_completed' 활성화 */}
+                  <div className={`${style.streak_fire} ${style.today_completed}`}>
+                    <StreakFire />
                   </div>
-                ) : (
-                  <div className={style.txt_days} style={{ color: '#fff' }}>
-                    {continuousDay}
-                  </div>
-                )}
-                <StreakFire />
-                {/* <Image alt="" src={'/src/images/@global-header/streak_on.svg'} className='heartbeat' width={26} height={26} /> */}
-              </>
-            )}
+                  {/* 6차 - 연속 학습 일수 모드일 경우 활성화 */}
+                  {/* <Image alt="" src={'/src/images/@global-header/streak_on.svg'} width={28} height={28} /> */}
+                </>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       ) : isAvatar ? (
         <div
           className={`${style.option_button} ${style.avatar}`}

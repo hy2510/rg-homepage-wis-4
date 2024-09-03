@@ -30,6 +30,7 @@ import {
 } from '../sign-up/_component/Signup'
 import StudySuspend from './_cpnt/StudySuspend'
 import Withdraw from './_cpnt/Withdraw'
+import StreakViewMethod from './_cpnt/StreakViewMethod'
 
 const STYLE_ID = 'page_account_info'
 
@@ -404,11 +405,12 @@ export default function Page() {
         )}
         {(isStudySuspendSetting || isWithdraw) && (
           <div className={style.accordion_box}>
-            {/* {isPaymentable && (
-              <AccordionItem headerContents={t('t199')}>
-                <PaymentList />
+            {isPaymentable && (
+              <AccordionItem headerContents={`연속학습 보기 설정`}>
+                {/* <PaymentList /> */}
+                <StreakViewMethod />
               </AccordionItem>
-            )} */}
+            )}
             {isStudySuspendSetting && (
               <AccordionItem headerContents={t('t200')}>
                 <StudySuspend />
