@@ -2,7 +2,7 @@ import '@/ui/common/global-option-quest/global-option-level-bg-color.scss'
 import useTranslation from '@/localization/client/useTranslations'
 import NumberUtils from '@/util/number-utils'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useAchieveLevelPoint } from '@/client/store/achieve/level-point/selector'
 import { useSelectStudyLevel } from '@/client/store/student/daily-learning/selector'
 import { useStudentInfo } from '@/client/store/student/info/selector'
@@ -13,7 +13,7 @@ import {
   NavItem,
   ProgressBar,
 } from '@/ui/common/common-components'
-import { useStyle } from '@/ui/context/StyleContext'
+import { useScreenMode, useStyle } from '@/ui/context/StyleContext'
 import { getDodoFriendsData } from './friends-data'
 
 const STYLE_ID = 'global_option_quest'
@@ -21,16 +21,18 @@ const STYLE_ID = 'global_option_quest'
 // 퀘스트 모달
 export function QuestModal({
   _viewQuestModal,
+  showFirstLevelMaster,
 }: {
   _viewQuestModal?: (isView: boolean) => void
+  showFirstLevelMaster?: boolean
 }) {
   const style = useStyle(STYLE_ID)
 
   // @language 'common'
   const { t } = useTranslation()
 
-  const [isDodoAndFriends, _isDodoAndFriends] = useState(true)
-  const [isLevelMaster, _isLevelMaster] = useState(false)
+  const [isDodoAndFriends, _isDodoAndFriends] = useState(showFirstLevelMaster ? false : true)
+  const [isLevelMaster, _isLevelMaster] = useState(showFirstLevelMaster ? true : false )
 
   return (
     <Modal
@@ -117,11 +119,56 @@ const DodoAndFriends = () => {
       nextProgress = 100 - ((destPoint - point) / range) * 100
     }
   }
+  
+  // 현재 진행중인 유닛의 위치로 자동으로 이동하기
+  const isMobile = useScreenMode() === 'mobile'
+
+  const modalContentRef = useRef<HTMLDivElement | null>(null);
+
+  const smoothScrollTo = (targetPosition: number) => {
+    if (!modalContentRef.current) return;
+    
+    const startPosition = modalContentRef.current.scrollTop;
+    const distance = targetPosition - startPosition;
+    const duration = 500; // 애니메이션 지속 시간 (밀리초)
+    let startTime: number | null = null;
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startPosition, distance, duration);
+      modalContentRef.current!.scrollTop = run;
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    };
+
+    const ease = (t: number, b: number, c: number, d: number) => {
+      t /= d / 2;
+      if (t < 1) return (c / 2) * t * t + b;
+      t--;
+      return (-c / 2) * (t * (t - 2) - 1) + b;
+    };
+
+    requestAnimationFrame(animation);
+  };
+
+  useEffect(() => {
+    if (modalContentRef.current) {
+      const elements = modalContentRef.current.querySelectorAll('.scroll-check-point');
+      
+      if (elements.length > 0) {
+        const lastElement = elements[elements.length - 1] as HTMLElement;
+        const elementPosition = lastElement.offsetTop;
+        const offsetPosition = isMobile ? elementPosition - 50 : elementPosition - 120;
+
+        smoothScrollTo(offsetPosition);
+      }
+    }
+  },[])
 
   return (
     <>
       <div className={style.quest_modal_body}>
-        <div className={style.dodo_and_friends}>
+        <div className={style.dodo_and_friends} ref={modalContentRef} style={{WebkitOverflowScrolling: 'touch'}}>
           <div className={style.comment}>
             <AlertBar>{t('t154')}</AlertBar>
           </div>
@@ -137,15 +184,17 @@ const DodoAndFriends = () => {
                     height={30}
                   />
                 </div> */}
-                <FriendsEntry
-                  imgSrc={
-                    point < friend.minPoint
-                      ? friend.lockImagePath
-                      : friend.imagePath
-                  }
-                  title={friend.title}
-                  story={friend.description}
-                />
+                {point > friend.minPoint && <div className='scroll-check-point'>
+                  <FriendsEntry
+                    imgSrc={
+                      point < friend.minPoint
+                        ? friend.lockImagePath
+                        : friend.imagePath
+                    }
+                    title={friend.title}
+                    story={friend.description}
+                  />
+                </div>}
                 {friend.list.map((card, i) => {
                   return (
                     <FriendsStory
@@ -158,7 +207,7 @@ const DodoAndFriends = () => {
                     />
                   )
                 })}
-                <div className={style.bridge}></div>
+                {/* <div className={style.bridge}></div> */}
                 {/* <div className={style.ending_button}>
                   <span>엔딩</span>
                   <Image

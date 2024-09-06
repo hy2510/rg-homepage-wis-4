@@ -200,6 +200,10 @@
           justify-content: center;
           color: var(--white);
           margin-bottom: var(--space-l);
+          .download_voca_container {
+            position: relative;
+            width: 100%;
+          }
           .download_voca,
           .download_worksheet {
             cursor: pointer;
@@ -360,6 +364,66 @@
         }
       }
     }
+  }
+}
+
+// Voca Print Options
+.voca_print_options {
+  min-width: 360px;
+  min-height: 200px;
+  background-color: var(--white);
+  border-radius: var(--round-m);
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 20px);
+  color: var(--black);
+  padding: var(--space-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  z-index: 100;
+  @media (prefers-color-scheme: dark) {
+    background-color: #0c0541;
+    color: var(--white);
+  }
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid #fff;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    top: calc(100% - 1px);
+    left: 20%;
+    @media (prefers-color-scheme: dark) {
+      border-top: 10px solid #0c0541;
+    }
+  }
+  .btn_delete {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background-image: url('/src/images/delete-icons/x_black.svg');
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    @media (prefers-color-scheme: dark) {
+      background-image: url('/src/images/delete-icons/x_white.svg');
+    }
+  }
+  .title {
+    font-size: var(--text-l);
+    font-weight: 600;
+  }
+  .check_item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xxs);
   }
 }
 

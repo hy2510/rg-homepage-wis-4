@@ -40,6 +40,7 @@ import { BookInfoResponse } from '@/repository/client/library/book-info/book-inf
 import {
   AlertBox,
   Button,
+  CheckBox,
   Modal,
   SelectBox,
   SelectBoxItem,
@@ -490,6 +491,8 @@ export function BookInfoModal({
       ? true
       : false
 
+  const [viewVocaPrintOptions, setViewVocaPrintOptions] = useState(false)
+
   let lblStartBtn = '시작하기'
   if (isReviewMode) {
     lblStartBtn = '다시보기'
@@ -583,7 +586,7 @@ export function BookInfoModal({
                 poster={bookImgSrc}
                 disablePictureInPicture={true}
                 autoPlay={false}
-                controls={true}
+                controls={false}
                 controlsList={'nodownload'}
                 playsInline={true}
                 style={{
@@ -704,33 +707,61 @@ export function BookInfoModal({
                     <div className={style.txt_l}>{author}</div>
                   </div>
                   <div className={style.download}>
-                    <div
-                      className={style.download_voca}
-                      onClick={() => {
-                        if (!isVocabularyYn) {
-                          return
-                        }
-                        if (!isStudyEnd) {
-                          window.open(
-                            bookInfo.vocabularyPath,
-                            '_blank',
-                            'noopener, noreferrer',
-                          )
-                        } else {
-                          alert(studyEndMessage)
-                        }
-                      }}>
-                      {isVocabularyYn && (
-                        <>
-                          <span>{t('t534')}</span>
-                          <Image
-                            alt=""
-                            src="/src/images/@book-info/download.svg"
-                            width={14}
-                            height={14}
-                          />
-                        </>
-                      )}
+                    <div className={style.download_voca_container}>
+                      {/* 단어장 다운받기 */}
+                      <div
+                        className={style.download_voca}
+                        // onClick={() => {
+                        //   if (!isVocabularyYn) {
+                        //     return
+                        //   }
+                        //   if (!isStudyEnd) {
+                        //     window.open(
+                        //       bookInfo.vocabularyPath,
+                        //       '_blank',
+                        //       'noopener, noreferrer',
+                        //     )
+                        //   } else {
+                        //     alert(studyEndMessage)
+                        //   }
+                        // }}
+                          onClick={() => {viewVocaPrintOptions ? setViewVocaPrintOptions(false) : setViewVocaPrintOptions(true)}}
+                        >
+                        {isVocabularyYn && (
+                          <>
+                            <span>{t('t534')}</span>
+                            <Image
+                              alt=""
+                              src="/src/images/@book-info/download.svg"
+                              width={14}
+                              height={14}
+                            />
+                          </>
+                        )}
+                      </div>
+                      {/* 단어장 프린트 옵션 */}
+                      {viewVocaPrintOptions
+                      ?
+                        <VocaPrintOptions 
+                          onClick={() => {
+                            if (!isVocabularyYn) {
+                              return
+                            }
+                            if (!isStudyEnd) {
+                              window.open(
+                                bookInfo.vocabularyPath,
+                                '_blank',
+                                'noopener, noreferrer',
+                              )
+                            } else {
+                              alert(studyEndMessage)
+                            }
+                          }}
+                          onClickDelete={() => {setViewVocaPrintOptions(false)}}
+                        />
+                      :
+                        <></>
+                      }
                     </div>
                     {isWorksheetYn && (
                       <div
@@ -1124,6 +1155,44 @@ const AddTodo = ({
           />
         </div>
       )}
+    </div>
+  )
+}
+
+// Voca Print Options
+const VocaPrintOptions = ({onClick, onClickDelete}: {onClick?: any; onClickDelete: any}) => {
+  const style = useStyle(STYLE_ID)
+  const CheckItem = (
+    { check, title, definitionOptions }: {check: boolean; title: string; definitionOptions?: boolean}) => {
+    return (
+      <>
+        <div className={style.check_item}>
+          <CheckBox check={check ? check : false} />
+          <div>{title}</div>
+        </div>
+        {definitionOptions === check && 
+          <SelectBox>
+            <SelectBoxItem>한국어</SelectBoxItem>
+            <SelectBoxItem>中文</SelectBoxItem>
+            <SelectBoxItem>Tiếng Việt</SelectBoxItem>
+            <SelectBoxItem>日本語</SelectBoxItem>
+            <SelectBoxItem>Bahasa Indonesia</SelectBoxItem>
+          </SelectBox>
+        }
+      </>
+    )
+  }
+  
+  return (
+    <div className={style.voca_print_options}>
+      <div className={style.btn_delete} onClick={onClickDelete}></div>
+      <div className={style.title}>Print Options</div>
+      <CheckItem check={true} title={'Vocabulary'} />
+      <CheckItem check={true} title={'Definition-1'} definitionOptions />
+      <CheckItem check={true} title={'Definition-2 (English)'} />
+      <CheckItem check={true} title={'Example Sentence (EB level 1)'} />
+      <CheckItem check={true} title={'Student Name'} />
+      <Button onClick={onClick}>Print</Button>
     </div>
   )
 }

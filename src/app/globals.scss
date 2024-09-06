@@ -1118,3 +1118,14 @@ button {
   padding-left: 15px;
   margin-bottom: 0;
 }
+
+.in_progress {
+  width: 34px;
+  height: 34px;
+  background-color: var(--blue);
+  border-radius: var(--round-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}

@@ -32,6 +32,11 @@
 
 // 퀘스트 모달 > 도도 앤 프렌즈
 .dodo_and_friends {
+  max-height: 100vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   .intro_button,
   .ending_button {
     display: flex;

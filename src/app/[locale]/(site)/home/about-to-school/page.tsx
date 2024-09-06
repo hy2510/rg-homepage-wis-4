@@ -52,7 +52,7 @@ const CardTitle = ({txt1, txt2}: {txt1: string, txt2: string}) => {
   )
 }
 
-const SlideContainer = ({children, theme, slideCardData}: {children?: any, theme?: string, slideCardData: any}) => {
+const SlideContainer = ({children, theme, slideCardData, fixCardContainerSize}: {children?: any, theme?: string, slideCardData: any, fixCardContainerSize?: boolean,}) => {
   const style = useStyle(STYLE_ID)
 
   const [slideNumber, setSlideNumber] = useState(0);
@@ -69,7 +69,7 @@ const SlideContainer = ({children, theme, slideCardData}: {children?: any, theme
         }}></div>
         <div className={`${style.right_arrow} ${theme == 'red' ? style.red : ''}`} onClick={() => {slideNumber < cardData.length - 1 ? setSlideNumber(slideNumber + 1) : setSlideNumber(0);}}></div>
         {children}
-        <div className={style.card_container}>
+        <div className={`${style.card_container} ${fixCardContainerSize && style.fix_size}`}>
           <CardTitle txt1={slideCardData[slideNumber].title} txt2={isMobile ? slideCardData[slideNumber].subMobile : slideCardData[slideNumber].sub} />
           <div className={style.slide_image}>
             <Image src={slideCardData[slideNumber].imgSrc} width={1000} height={600} alt='' />
@@ -124,7 +124,7 @@ const Section01 = () => {
           <div>다양한 주제의 재미있고 유익한 스토리북을 통해{isMobile ? '' : <br />} 생생한 영어 표현과 꾸준한 독서 습관을 기르고,</div>
           <div>독후 학습을 통해 영어의 문맥과 핵심 내용을 파악하여{isMobile ? '' : <br />} 문제 해결 능력을 키울 수 있습니다.</div>
         </div>
-        <SlideContainer theme='' slideCardData={slideCardData}>
+        <SlideContainer theme='' slideCardData={slideCardData} fixCardContainerSize>
           <div className={style.overlap}>
             <TitleBox txt1={'보고, 듣고, 읽고, 말하는'} txt2={'풍부한 콘텐츠'} txt1Color={''} txt2Color={'var(--blue)'} />
           </div>

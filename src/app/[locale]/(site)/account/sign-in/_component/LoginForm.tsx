@@ -4,6 +4,7 @@ import useTranslation from '@/localization/client/useTranslations'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import { useStyle } from '@/ui/context/StyleContext'
+import { ChooseLanguage, Margin } from '@/ui/common/common-components'
 
 const STYLE_ID = 'page_sign_in'
 
@@ -15,6 +16,8 @@ export default function LoginForm({ children }: { children?: ReactNode }) {
 
   return (
     <main className={style.sign_in}>
+      <ChooseLanguage langguage={'eng'} />
+      <Margin height={20} />
       <div className={style.catchphrase}>
         <div className={style.brand_name}>{t('t206')}</div>
         <div className={style.sentence}>{t('t207')}</div>

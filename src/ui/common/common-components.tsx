@@ -315,11 +315,13 @@ export function ProgressBar({
   check,
   slim,
   toolTip,
+  onClickToolTip,
 }: {
   width: string
   check?: string
   slim?: boolean
   toolTip?: string
+  onClickToolTip?: any
 }) {
   const style = useStyle(STYLE_ID)
 
@@ -332,7 +334,7 @@ export function ProgressBar({
       </div>
       {check && (
         <div className={style.check} style={{ width: check }}>
-          <div className={style.tool_tip}>{toolTip}</div>
+          <div className={`${style.tool_tip} ${onClickToolTip && style.click}`} onClick={onClickToolTip}>{toolTip} {onClickToolTip && <span className={style.arrow_icon}></span>}</div>
         </div>
       )}
     </div>
@@ -798,5 +800,28 @@ export const NoticeBoardItem = ({
         <div className={style.notice_title}>{title}</div>
       </Link>
     </div>
+  )
+}
+
+// 언어선택 버튼
+export const ChooseLanguage = ({langguage, align}: {langguage: string, align?: string}) => {
+  const style = useStyle(STYLE_ID)
+  const [checkLanguage, setCheckLanguage] = useState(langguage)
+
+  return (
+    <>
+      {/* <div className={style.choose_language_header}>System Language</div> */}
+      <div className={`${style.choose_language} ${align === 'left' && style.align_left}`}>  
+        <div className={style.kr_icon} onClick={() => {setCheckLanguage('kr')}}>
+          {checkLanguage === 'kr' && <span className={style.check_icon}></span>}
+        </div>
+        <div className={style.vn_icon} onClick={() => {setCheckLanguage('vn')}}>
+          {checkLanguage === 'vn' && <span className={style.check_icon}></span>}
+        </div>
+        <div className={style.eng_icon} onClick={() => {setCheckLanguage('eng')}}>
+          {checkLanguage === 'eng' && <span className={style.check_icon}></span>}
+        </div>
+      </div>
+    </>
   )
 }

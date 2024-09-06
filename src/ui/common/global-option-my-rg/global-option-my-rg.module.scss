@@ -202,6 +202,9 @@
       box-shadow: 0 1px 10px var(--gray2);
       background-color: var(--white);
       z-index: 1;
+      @media (prefers-color-scheme: dark) {
+        background-color: var(--dark-blue);
+      }
       .menu_item {
         padding: var(--space-s);
         border-bottom: 1px solid var(--gray2);

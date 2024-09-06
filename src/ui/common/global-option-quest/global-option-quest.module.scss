@@ -2,6 +2,14 @@
 .quest_modal {
   .quest_modal_body {
     padding: 0 var(--space-m) var(--space-m);
+    height: fit-content;
+    max-height: calc(95dvh - 330px);
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     .comment {
       margin: var(--space-m) 0;
       color: var(--gray-dark);
@@ -30,6 +38,13 @@
 
 // 퀘스트 모달 > 도도 앤 프렌즈
 .dodo_and_friends {
+  max-height: calc(95dvh - 330px);
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   .intro_button,
   .ending_button {
     display: flex;

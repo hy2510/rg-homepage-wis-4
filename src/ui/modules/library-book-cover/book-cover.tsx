@@ -5,6 +5,7 @@ import NumberUtils from '@/util/number-utils'
 import Image from 'next/image'
 import { useStyle } from '@/ui/context/StyleContext'
 import { BookInfoModal } from './BookInfoModal'
+import InProgress from '../InProgress'
 
 const STYLE_ID = 'book_cover'
 
@@ -116,13 +117,14 @@ export function BookCover({
             )}
             {isInprogressTodo && (
               <div className={style.in_progress}>
-                <Image
+                {/* <Image
                   alt=""
                   src="/src/images/@book-cover/in_progress.svg"
                   width={34}
                   height={34}
                   style={{ width: '34px', height: '34px' }}
-                />
+                /> */}
+                <InProgress />
               </div>
             )}
             {isHomework && (

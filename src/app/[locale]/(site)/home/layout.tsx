@@ -93,14 +93,14 @@ export default function Layout({ children }: { children?: ReactNode }) {
 
         {/* 개인 - 이용안내 */}
         <HomeNavItem
-          name={'이용안내'}
+          name={'이용 안내'}
           href={SITE_PATH.HOME.USER_GUIDE_PERSONAL}
           active={pathname.indexOf(SITE_PATH.HOME.USER_GUIDE_PERSONAL) !== -1}
         />
 
         {/* 학교, 학원 - 이용안내 */}
         <HomeNavItem
-          name={'이용안내'}
+          name={'이용 안내'}
           href={SITE_PATH.HOME.USER_GUIDE_GROUP}
           active={pathname.indexOf(SITE_PATH.HOME.USER_GUIDE_GROUP) !== -1}
         />

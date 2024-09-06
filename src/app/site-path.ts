@@ -67,6 +67,10 @@ const RANKING = {
   HALL_OF_FAME: '/ranking/hall-of-fame-rank',
 }
 
+const ADMIN = {
+  MAIN: '/admin',
+}
+
 export function isValidatePath(path: string): boolean {
   let isStartWithLocale = false
   for (let i = 0; i < supportLanguages.length; i++) {
@@ -119,5 +123,6 @@ const SITE_PATH = {
   LIBRARY,
   REVIEW,
   RANKING,
+  ADMIN,
 }
 export default SITE_PATH

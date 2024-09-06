@@ -22,7 +22,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { useFetchFindCustomer } from '@/client/store/customer/info/hook'
-import { Button, CheckBox, TextField } from '@/ui/common/common-components'
+import { Button, CheckBox, ChooseLanguage, Margin, TextField } from '@/ui/common/common-components'
 import { useStyle } from '@/ui/context/StyleContext'
 
 const STYLE_ID = 'page_account_list'
@@ -138,6 +138,8 @@ export default function Page() {
           Install App
         </button>
       )} */}
+      <ChooseLanguage langguage={'eng'} />
+      <Margin height={20} />
       <div className={style.catchphrase}>
         <div className={style.brand_name}>{t('t206')}</div>
         <div className={style.sentence}>{t('t207')}</div>

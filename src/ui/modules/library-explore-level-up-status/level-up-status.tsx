@@ -1,7 +1,11 @@
+'use client'
+
 import useTranslation from '@/localization/client/useTranslations'
 import Image from 'next/image'
 import { ProgressBar } from '@/ui/common/common-components'
 import { useStyle } from '@/ui/context/StyleContext'
+import { QuestModal } from '@/app/[locale]/(site)/_header/QuestModal'
+import { useCallback, useState } from 'react'
 
 const STYLE_ID = 'level_up_status'
 
@@ -21,24 +25,29 @@ export const LevelUpStatus = ({
   // @Language 'common'
   const { t } = useTranslation()
 
+  const [viewLevelMasterModal, setViewLevelMasterModal] = useState(false)
+
   return (
-    <div className={style.level_up_status}>
-      <div className={style.level_up_status_container}>
-        <div className={style.row_a}>
-          <div className={style.current_level} onClick={onClick}>
-            <div className={style.txt_h}>{t('t469')}</div>
-            <div className={style.txt_d}>{studyLevel}</div>
-            <span className={style.arrow_icon}></span>
+    <>
+      <div className={style.level_up_status}>
+        <div className={style.level_up_status_container}>
+          <div className={style.row_a}>
+            <div className={style.current_level} onClick={onClick}>
+              <div className={style.txt_h}>{t('t469')}</div>
+              <div className={style.txt_d}>{studyLevel}</div>
+              <span className={style.arrow_icon}></span>
+            </div>
+          </div>
+          <div className={style.row_b}>
+            {onClickStudyMode && (
+              <SetStudyMode onClickStudyMode={onClickStudyMode} />
+            )}
           </div>
         </div>
-        <div className={style.row_b}>
-          {onClickStudyMode && (
-            <SetStudyMode onClickStudyMode={onClickStudyMode} />
-          )}
-        </div>
+        <ProgressBar width={progress} check="100%" toolTip="Level Master" onClickToolTip={() => {setViewLevelMasterModal(true)}} />
       </div>
-      <ProgressBar width={progress} check="100%" toolTip="Level Master" />
-    </div>
+      {viewLevelMasterModal ? <QuestModal _viewQuestModal={() => setViewLevelMasterModal(false)} showFirstLevelMaster={true} /> : <></>}
+    </>
   )
 }
 

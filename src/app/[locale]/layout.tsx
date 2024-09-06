@@ -48,6 +48,10 @@ export default async function LanguageLayout({
         </LanguagePackContextProvider>
         {/* <SiteMapLinkMenu /> */}
         <script defer src="/assets/gitple-bridge.js"></script>
+        <script defer src="https://pcdn2.swing2app.co.kr/swing_public_src/v3/2024_07_23_001/js/swing_app_on_web.js"></script>
+        <script>
+          swingWebViewPlugin.app.ui.setIosBackColor(`#f0f2f5`);
+        </script>
       </body>
     </html>
   )

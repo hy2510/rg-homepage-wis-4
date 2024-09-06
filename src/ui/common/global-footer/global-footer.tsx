@@ -3,6 +3,7 @@
 import useTranslation from '@/localization/client/useTranslations'
 import { useStyle } from '@/ui/context/StyleContext'
 import Link from 'next/link'
+import { ChooseLanguage, Margin } from '../common-components'
 
 const STYLE_ID = 'global_footer'
 
@@ -15,6 +16,8 @@ export default function Gfooter() {
   return (
     <div className={style.g_footer}>
       <div className="container">
+        <ChooseLanguage langguage={'eng'} align='left' />
+        <Margin height={20} />
         {/* <div className={style.row_a}>
           <span>{t('t321')}</span>
           <span>{'1599-0533'}</span>
@@ -41,6 +44,7 @@ export default function Gfooter() {
           <div>{t('t422')}</div>
         </div>
       </div>
+      <Margin height={50} />
     </div>
   )
 }

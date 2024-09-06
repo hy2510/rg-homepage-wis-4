@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useStyle } from '@/ui/context/StyleContext'
 
 const STYLE_ID = 'home_main_main_banner'
@@ -14,6 +14,14 @@ export default function MainBanner({
 }) {
   const style = useStyle(STYLE_ID)
   const [order, _order] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      banner.length > order + 1 ? _order(order + 1) : _order(0)
+      }, 5000);
+
+      return () => {clearInterval(interval)}
+  }, [order]);
 
   return (
     <div className={style.main_banner}>

@@ -16,7 +16,6 @@
 }
 
 .section01 {
-  // min-height: 100vh;
   background-image: url('/src/images/@about-to-school/section01/bg_top.svg');
   background-position: top -400px center;
   background-repeat: no-repeat;
@@ -261,6 +260,9 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  &.fix_size {
+    min-height: 300px;
+  }
   .slide_image {
     // min-height: 300px;
     display: flex;

@@ -634,6 +634,13 @@ const MyRgEtc = ({
     pk: 'https://wcfresource.a1edu.com/NewSystem/AppMobile/webview/randing/prek_workbook_mp3/',
   }
   const [viewPreKMp3Menu, setViewPreKMp3Menu] = useState(false)
+  
+  const { loading: isLevelTestInfoLoading } = useOnLoadLevelTestInfo()
+  const levelTestInfo = useLevelTestInfo().payload
+  
+  const onStartLevelTest = () => {
+    goToLevelTest()
+  }
 
   return (
     <div className={style.my_rg_etc}>
@@ -659,15 +666,19 @@ const MyRgEtc = ({
           <div className={style.txt_l}>{t('t044')}</div>
         </div>
       )}
-      <div className={style.etc_item} onClick={onClickChatbot}>
-        <Image
-          alt=""
-          src="/src/images/@my-rg-modal/chatbot.svg"
-          width={50}
-          height={50}
-        />
-        <div className={style.txt_l}>{t('t057')}</div>
-      </div>
+      {/* <div className={style.etc_item} onClick={onClickChatbot}> */}
+      {!isLevelTestInfoLoading && levelTestInfo.isAvailableLevelTest &&
+        <div className={style.etc_item} onClick={onStartLevelTest}>
+          <Image
+            alt=""
+            src="/src/images/@my-rg-modal/chatbot.svg"
+            width={50}
+            height={50}
+          />
+          {/* <div className={style.txt_l}>{t('t057')}</div> */}
+          <div className={style.txt_l}>레벨 테스트</div>
+        </div>
+      }
       {/* DODO ABC를 사용하고 있는 고객사의 경우 */}
       <div className={style.etc_item}>
         <div

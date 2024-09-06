@@ -409,7 +409,7 @@
       background-color: var(--red);
     }
     .tool_tip {
-      min-width: 90px;
+      min-width: fit-content;
       position: absolute;
       top: calc(100% + 5px);
       // left: calc(100% - 40px);
@@ -418,10 +418,13 @@
       font-weight: 500;
       font-size: var(--text-xs);
       text-align: center;
-      padding: var(--space-xxs);
+      padding: var(--space-xxs) var(--space-xs);
       // padding-bottom: 10px;
       border-radius: var(--round-s);
       background-color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 2px;
       &::after {
         content: '';
         position: absolute;
@@ -431,6 +434,17 @@
         border-style: solid;
         border-width: 4px;
         border-color: transparent transparent var(--red) transparent;
+      }
+      &.click {
+        cursor: pointer;
+      }
+      .arrow_icon {
+        width: 12px;
+        height: 12px;
+        background-image: url('/src/images/arrow-icons/chv_right_white.svg');
+        background-size: 12px;
+        background-repeat: no-repeat;
+        background-position: center;
       }
     }
   }
@@ -843,5 +857,76 @@
     font-size: var(--txet-l);
     font-weight: 500;
     // padding-left: var(--space-m);
+  }
+}
+
+// 언어선택 버튼
+.choose_language_header {
+  margin-bottom: var(--space-s);
+  display: flex;
+  justify-content: center;
+  font-size: var(--text-s);
+  font-weight: 600;
+}
+.choose_language {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  &.align_left {
+    justify-content: flex-start;
+  }
+  @mixin lang_icon($background-image-url) {
+    cursor: pointer;
+    position: relative;
+    width: 34px;
+    height: 34px;
+    background-image: url($background-image-url);
+    background-size: auto 34px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 4px solid var(--gray3);
+    border-radius: 100px;
+    opacity: 0.8;
+  }
+  @mixin lang_icon_cover {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: 1;
+    background-color: rgba($color: #0062e3, $alpha: 0.5);
+    border-radius: 100px;
+  }
+  @mixin check_icon {
+    content: '';
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    z-index: 2;
+    width: 15px;
+    height: 15px;
+    background-image: url('/src/images/check-icons/check_white.svg');
+    background-size: contain;
+    background-position: center top 0.5px;
+    background-repeat: no-repeat;
+    background-color: var(--deep-blue);
+    border-radius: 100px;
+  }
+  .kr_icon {
+    @include lang_icon('/src/images/@choose-language/kr.svg');
+  }
+  .vn_icon {
+    @include lang_icon('/src/images/@choose-language/vn.svg');
+  }
+  .eng_icon {
+    @include lang_icon('/src/images/@choose-language/gb.svg');
+  }
+  .check_icon {
+    @include lang_icon_cover;
+    &::after {
+      @include check_icon;
+    }
   }
 }
