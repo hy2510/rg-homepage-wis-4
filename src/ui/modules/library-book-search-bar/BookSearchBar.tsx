@@ -35,6 +35,9 @@ export default function BookSearchBar({
   if (studyOpen.EB || studyOpen.PB) {
     supportCategory.push('NEWBOOK')
   }
+  if (studyOpen.EB || studyOpen.PB) {
+    supportCategory.push('WORKBOOK')
+  }
 
   return (
     <SearchBar

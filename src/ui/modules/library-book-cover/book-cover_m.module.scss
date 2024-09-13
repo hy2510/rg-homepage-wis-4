@@ -28,6 +28,19 @@
     }
     .book_image {
       position: relative;
+      .grade_badge {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        z-index: 1;
+        background-color: rgba($color: #000000, $alpha: 0.75);
+        color: var(--white);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        padding: 2px var(--space-xs);
+        padding-bottom: 3px;
+        border-radius: var(--round-full);
+      }
       .check_box {
         cursor: pointer;
         width: 40px;
@@ -62,6 +75,10 @@
           border: 1.2px solid rgba($color: #ffffff, $alpha: 0.3);
         }
         // border-bottom: 3px solid rgba($color: #000000, $alpha: 0.5);
+        background-image: url('/src/images/@global-header/company_logo_gray.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: auto;
       }
     }
     .tag {

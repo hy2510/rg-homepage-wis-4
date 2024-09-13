@@ -403,14 +403,14 @@ export default function Page() {
             </span>
           </div>
         )}
+        <div className={style.accordion_box}>
+          <AccordionItem headerContents={`연속학습 보기 설정`}>
+            <StreakViewMethod />
+          </AccordionItem>
+        </div>
         {(isStudySuspendSetting || isWithdraw) && (
           <div className={style.accordion_box}>
-            {isPaymentable && (
-              <AccordionItem headerContents={`연속학습 보기 설정`}>
-                {/* <PaymentList /> */}
-                <StreakViewMethod />
-              </AccordionItem>
-            )}
+            {/* 결제 이력 삭제 */}
             {isStudySuspendSetting && (
               <AccordionItem headerContents={t('t200')}>
                 <StudySuspend />

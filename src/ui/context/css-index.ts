@@ -76,8 +76,8 @@ import review_nav_bar from '@/ui/modules/review-nav-bar/review-nav-bar.module.sc
 import review_nav_bar_m from '@/ui/modules/review-nav-bar/review-nav-bar_m.module.scss'
 import quick_view_reports from '@/ui/modules/review-quick-view-reports/quick-view-reports.module.scss'
 import quick_view_reports_m from '@/ui/modules/review-quick-view-reports/quick-view-reports_m.module.scss'
-import page_about from '@/app/[locale]/(site)/about/page.module.scss'
-import page_about_m from '@/app/[locale]/(site)/about/page_m.module.scss'
+import page_catalog from '@/app/[locale]/(site)/catalog/page.module.scss'
+import page_catalog_m from '@/app/[locale]/(site)/catalog/page_m.module.scss'
 import page_account_info from '@/app/[locale]/(site)/account/account-info/page.module.scss'
 import page_account_info_m from '@/app/[locale]/(site)/account/account-info/page_m.module.scss'
 import page_account_list from '@/app/[locale]/(site)/account/account-list/page.module.scss'
@@ -179,8 +179,8 @@ export default function findStyle(id: string): {
   mobile?: CssStyle
 } {
   switch (id) {
-    case 'page_about':
-      return { pc: page_about, mobile: page_about_m }
+    case 'page_catalog':
+      return { pc: page_catalog, mobile: page_catalog_m }
     case 'page_account_info':
       return { pc: page_account_info, mobile: page_account_info_m }
     case 'page_account_list':

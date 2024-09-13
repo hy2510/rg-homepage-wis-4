@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useOnLoadBoardNoticeList } from '@/client/store/home/hook'
 import BoardList from './BoardList'
 
-export default function NoticeBoardList({ page }: { page: number }) {
+export default function NoticeBoardList({ page, grid }: { page: number, grid?: boolean }) {
   const { payload, loading, error } = useOnLoadBoardNoticeList({ page })
 
   const noticeList = [
@@ -30,6 +30,7 @@ export default function NoticeBoardList({ page }: { page: number }) {
       page={page}
       maxPage={maxPage}
       onPageClick={onPageChange}
+      grid={grid}
     />
   )
 }

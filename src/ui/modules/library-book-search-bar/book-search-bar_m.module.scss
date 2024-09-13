@@ -7,11 +7,16 @@
   margin-top: 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: var(--space-xxs);
   position: relative;
   z-index: 10;
   background-color: var(--white);
   @media (prefers-color-scheme: dark) {
     background-color: #0c0541;
+  }
+  .grid_icon {
+    display: none;
   }
 }
 .book_search_bg::after {

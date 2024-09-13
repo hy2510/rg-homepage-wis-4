@@ -4,7 +4,7 @@ import useTranslation from '@/localization/client/useTranslations'
 import { useState } from 'react'
 import { SearchBookResponse } from '@/repository/client/library/search/search-book'
 import PaginationBar from '@/ui/common/PaginationBar'
-import { BackLink } from '@/ui/common/common-components'
+import { BackLink, Dropdown, DropdownItem } from '@/ui/common/common-components'
 import { BookCover } from '@/ui/modules/library-book-cover/book-cover'
 import LevelSelector from '@/ui/modules/library-explore-level-selector/level-selector'
 import { BookList } from '@/ui/modules/library-find-book-list/book-list'
@@ -27,6 +27,7 @@ export function SearchLevelBookListTemplate({
   filter,
   books,
   onSearchOptionChanged,
+  isWorkbook,
 }: {
   mainClassName: string
   backLink: string
@@ -51,6 +52,7 @@ export function SearchLevelBookListTemplate({
     genre?: string
     status?: string
   }) => void
+  isWorkbook?: boolean
 }) {
   // @Language 'common'
   const { t } = useTranslation()
@@ -91,15 +93,17 @@ export function SearchLevelBookListTemplate({
         },
       ],
     },
-    // {
-    //   group: 'd2',
-    //   title: t('t528'),
-    //   option: [
-    //     { id: '11', label: t('t529'), enabled: false },
-    //     { id: '21', label: t('t530'), enabled: false },
-    //     { id: '31', label: t('t531'), enabled: false },
-    //   ],
-    // },
+    // 2레벨 이상 부가 옵션 - 학습 상태가 완료한 학습인 경우 활성화 됨 
+    // (옵션: 설정 안함, 학습 1회차를 Full 모드로 완료함, 학습 1회차를 Easy 모드로 완료함)
+    {
+      group: 'd2',
+      title: t('t528'),
+      option: [
+        { id: '11', label: t('t529'), enabled: false },
+        { id: '21', label: t('t530'), enabled: false },
+        { id: '31', label: t('t531'), enabled: false },
+      ],
+    },
     {
       group: 'sort',
       title: t('t348'),
@@ -212,16 +216,20 @@ export function SearchLevelBookListTemplate({
         {title}
       </BackLink>
       <StudyLevelBox>
-        <StudyLevelTitle
-          level={level}
-          onClick={() => {
-            setShowLevelSelector(true)
-          }}
-        />
-        <LibrarySearchFilter
-          optionList={bookFilter}
-          onOptionChange={onFilterChanged}
-        />
+        {isWorkbook
+        ? <WorkbookSearch level={level} />
+        : <StudyLevelTitle
+            level={level}
+            onClick={() => {setShowLevelSelector(true)}}
+          />
+        }
+        {isWorkbook 
+        ? <></> 
+        : <LibrarySearchFilter
+            optionList={bookFilter}
+            onOptionChange={onFilterChanged}
+          />
+        }
         {isShowLevelSelector && (
           <LevelSelector
             _viewLevelSelector={setShowLevelSelector}
@@ -293,6 +301,38 @@ export function SearchLevelBookListTemplate({
         />
       )}
     </main>
+  )
+}
+
+const WorkbookSearch = ({level}: {level: string}) => {
+  return (
+    <>
+      <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+        <Dropdown title={level}>
+          <DropdownItem>KA</DropdownItem>
+          <DropdownItem>KB</DropdownItem>
+          <DropdownItem>KC</DropdownItem>
+          <DropdownItem>1A</DropdownItem>
+          <DropdownItem>1B</DropdownItem>
+          <DropdownItem>1C</DropdownItem>
+          <DropdownItem>2A</DropdownItem>
+          <DropdownItem>2B</DropdownItem>
+          <DropdownItem>2C</DropdownItem>
+        </Dropdown>
+        <Dropdown title={'1'}>
+          <DropdownItem>1</DropdownItem>
+          <DropdownItem>2</DropdownItem>
+          <DropdownItem>3</DropdownItem>
+          <DropdownItem>4</DropdownItem>
+          <DropdownItem>5</DropdownItem>
+          <DropdownItem>6</DropdownItem>
+          <DropdownItem>7</DropdownItem>
+          <DropdownItem>8</DropdownItem>
+          <DropdownItem>9</DropdownItem>
+          <DropdownItem>10</DropdownItem>
+        </Dropdown>
+      </div>
+    </>
   )
 }
 

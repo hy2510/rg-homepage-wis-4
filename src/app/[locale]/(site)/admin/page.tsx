@@ -7,11 +7,14 @@ import { useSiteBlueprint } from "@/app/_context/CustomerContext";
 import NoticeBoardList from "../home/main/_cpnt/NoticeBoardList";
 import TabNavBar from "@/ui/common/TabNavBar";
 import { Nav, NavItem } from "@/ui/common/common-components";
+import { useState } from "react";
 
 export default function Page({searchParams}: { searchParams: { page: string }}) {
 
   const { customLogo } = useSiteBlueprint()
   const page = searchParams.page ? Number(searchParams.page) : 1
+
+  const [tab, setTab] = useState(1)
 
   return (
     <>
@@ -55,11 +58,14 @@ export default function Page({searchParams}: { searchParams: { page: string }}) 
       <main className="container">
         <div className={style.admin}>
           <Nav>
-            <NavItem active={true}>공지</NavItem>
-            <NavItem active={false}>갤러리</NavItem>
+            <NavItem active={tab === 1} onClick={() => {setTab(1)}}>공지</NavItem>
+            <NavItem active={tab === 2} onClick={() => {setTab(2)}}>갤러리</NavItem>
           </Nav>
           <div className={style.board}>
-            <NoticeBoardList page={page}  />
+            {/* 공지 */}
+            {tab === 1 && <NoticeBoardList page={page} />}
+            {/* 갤러리 */}
+            {tab === 2 && <NoticeBoardList page={page} grid={true} />}
           </div>
         </div>
       </main>

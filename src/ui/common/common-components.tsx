@@ -772,13 +772,16 @@ export function Margin({ height }: { height: number }) {
 
 // 게시판 (컨테이너)
 export const NoticeBoardContainer = ({
-  children,
+  children, grid
 }: {
   children?: ReactNode
+  grid?: boolean
 }) => {
   const style = useStyle(STYLE_ID)
 
-  return <div className={style.notice_board_container}>{children}</div>
+  const styleGrid = grid ? style.notice_board_container_grid : style.notice_board_container
+
+  return <div className={`${styleGrid}`}>{children}</div>
 }
 
 // 게시판 (아이템)
@@ -786,19 +789,35 @@ export const NoticeBoardItem = ({
   title,
   date,
   href,
+  grid,
 }: {
   title?: string
   date?: string
   href?: string
+  grid?: boolean
 }) => {
   const style = useStyle(STYLE_ID)
 
+  const styleGrid = grid ? style.notice_board_item_grid : style.notice_board_item
+
   return (
-    <div className={style.notice_board_item}>
-      <div className={style.notice_date}>{date}</div>
-      <Link href={href ? href : ''} target="_self">
-        <div className={style.notice_title}>{title}</div>
-      </Link>
+    <div className={`${styleGrid}`}>
+      {
+        grid ? <>
+          <Link href={href ? href : ''} target="_self">
+            <div className={style.thumbnail_image}>
+              <Image src='https://fservice6.readinggate.com/UPLOADFILE/Gallery/002179/07bca3a7dd314633b035212f93129b92.jpg' width={100} height={100} alt='' />
+            </div>
+          </Link>
+          <div className={style.notice_title}>{title}</div>
+          <div className={style.notice_date}>{date}</div>
+        </> : <>
+          <div className={style.notice_date}>{date}</div>
+          <Link href={href ? href : ''} target="_self">
+            <div className={style.notice_title}>{title}</div>
+          </Link>
+        </>
+      }
     </div>
   )
 }

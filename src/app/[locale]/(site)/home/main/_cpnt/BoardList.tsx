@@ -12,15 +12,17 @@ export default function BoardList({
   page,
   maxPage,
   onPageClick,
+  grid,
 }: {
   list: { title: string; date: string; link: string }[]
   page: number
   maxPage: number
   onPageClick?: (page: number) => void
+  grid?: boolean
 }) {
   return (
     <div>
-      <NoticeBoardContainer>
+      <NoticeBoardContainer grid={grid}>
         {list.map((a) => {
           return (
             <NoticeBoardItem
@@ -28,6 +30,7 @@ export default function BoardList({
               title={a.title}
               date={a.date}
               href={a.link}
+              grid={grid}
             />
           )
         })}

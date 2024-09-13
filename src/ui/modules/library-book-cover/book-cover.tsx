@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useStyle } from '@/ui/context/StyleContext'
 import { BookInfoModal } from './BookInfoModal'
 import InProgress from '../InProgress'
+import { useBookInfoDetail } from '@/client/store/bookinfo/detail/selector'
 
 const STYLE_ID = 'book_cover'
 
@@ -139,6 +140,8 @@ export function BookCover({
             )}
           </div>
           <div className={style.book_image}>
+            {/* 등급 배지 : All인 경우 안보임, Teen과 Adult인 경우만 보이게 하기 */}
+            <div className={style.grade_badge}>Adult</div>
             {isExportMode ? (
               <div
                 className={`${style.check_box} ${style.swirl_in_bck}`}

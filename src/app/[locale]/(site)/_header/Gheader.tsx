@@ -41,7 +41,7 @@ const MENU = {
   },
   about: {
     key: '/about',
-    href: SITE_PATH.HOME.MAIN,
+    href: SITE_PATH.CATALOG.CATALOG,
     icon: '/src/images/@global-header/about_rg.svg',
     mobileIconOn: '/src/images/@global-header/about_rg_on_mobile.svg',
     mobileIconOff: '/src/images/@global-header/about_rg_off_mobile.svg',
@@ -135,6 +135,7 @@ export default function Gheader() {
   const { customLogo } = useSiteBlueprint()
 
   const styleDodoABC = `${pathname.indexOf(SITE_PATH.BASIC.DODO_ABC) != -1 ? ` ${style.dodo_abc}` : ''}`
+  const styleAbout = `${pathname.indexOf(SITE_PATH.CATALOG.CATALOG) != -1 ? style.about : ''}`
 
   useEffect(() => {
     if (modalViewName) {
@@ -150,7 +151,7 @@ export default function Gheader() {
 
   return (
     <>
-      <div className={`${style.global_header}${styleDodoABC}`}>
+      <div className={`${style.global_header} ${styleDodoABC} ${styleAbout}`}>
         <div className={`${style.global_header_container} container`}>
           <div className={style.company_logo}>
             <a href={SITE_PATH.HOME.MAIN}>

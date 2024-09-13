@@ -17,6 +17,7 @@ export type CATEGORY_ID =
   | 'LC'
   | 'MOVIE'
   | 'NEWBOOK'
+  | 'WORKBOOK'
 type Category = {
   id: CATEGORY_ID
   title: string
@@ -66,6 +67,13 @@ const BookSearchBarCategoryData: Category[] = [
     comment: '이달의 신규 학습 도서',
     image: '/src/images/@book-search-bar/new_book.svg',
     link: SITE_PATH.LIBRARY.NEW_BOOK,
+  },
+  {
+    id: 'WORKBOOK',
+    title: 'Workbook',
+    comment: '워크북 연계 도서',
+    image: '/src/images/@book-search-bar/workbook.svg',
+    link: SITE_PATH.LIBRARY.WORKBOOK,
   },
   {
     id: 'LC',
@@ -150,9 +158,13 @@ export const BookSearchBar = ({
             _isBookSearchActive(false)
           }
         }}>
+        <div className={style.grid_icon}>
+          <Image src={'/src/images/grid-icons/grid.svg'} width={16} height={16} alt='' />
+        </div>
         <input
           type="text"
-          placeholder={t('t490')}
+          // placeholder={t('t490')}
+          placeholder={'eBook, pBook, New Books ...'}
           value={searchKeyword}
           onChange={(e) => setSearchKeyword(e.target.value)}
           style={{ width: 'calc(100% - 120px)' }}
@@ -220,6 +232,9 @@ export const BookSearchBar = ({
                     break
                   case 'NEWBOOK':
                     comment = t('t487')
+                    break
+                  case 'WORKBOOK':
+                    comment = '워크북 연계 도서'
                     break
                   case 'LC':
                     comment = t('t488')

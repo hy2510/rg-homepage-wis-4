@@ -1,5 +1,13 @@
 import { supportLanguages } from '@/localization/localize-config'
 
+const CATALOG = {
+  CATALOG: '/catalog',
+  BASIC: '/catalog/dodo-abc',
+  EBOOK: '/catalog/ebook',
+  PBOOK_QUIZ: '/catalog/pbook-quiz',
+  LEVEL_MASTER: '/catalog/level-master',
+}
+
 const HOME = {
   MAIN: '/home/main',
   NOTICE: '/home/main/rg-news/notice',
@@ -54,6 +62,7 @@ const LIBRARY = {
   SERIES: '/library/series',
   THEME: '/library/theme',
   MOVIE_BOOK: '/library/movie-book',
+  WORKBOOK: '/library/workbook',
 }
 const REVIEW = {
   SIMPLE: '/review',
@@ -117,6 +126,7 @@ export const CUSTOMER_CENTER_URL =
   'https://ossified-smell-f52.notion.site/RG-a8fc674ab32f458ca70d659e1916e34c'
 
 const SITE_PATH = {
+  CATALOG,
   HOME,
   ACCOUNT,
   BASIC,

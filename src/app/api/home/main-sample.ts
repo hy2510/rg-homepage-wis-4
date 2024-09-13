@@ -110,7 +110,7 @@ const Data: {
       title: '하이도도',
       backgroundColor: '',
       image: '/src/sample-images/hidodo_banner.png',
-      link: 'https://dev.readinggate.com/hidodo/',
+      link: 'https://gohidodo.com/',
       self: false,
       width: 320,
       height: 300,

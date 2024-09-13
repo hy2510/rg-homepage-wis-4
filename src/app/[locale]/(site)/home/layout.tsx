@@ -61,7 +61,7 @@ export default function Layout({ children }: { children?: ReactNode }) {
           active={pathname.indexOf(SITE_PATH.HOME.MAIN) !== -1}
         />
 
-        {/* 학교, 학원 - 소개 */}
+        {/* 개인, 학교, 학원 - 소개 */}
         <HomeNavItem
           name={'소개'}
           href={SITE_PATH.HOME.ABOUT_TO_SCHOOL}

@@ -1,0 +1,520 @@
+"use client";
+
+import { useScreenMode, useStyle } from "@/ui/context/StyleContext";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+
+const STYLE_ID = "page_catalog";
+
+export default function Page() {
+  const style = useStyle(STYLE_ID);
+  const isMobile = useScreenMode() === "mobile";
+  
+  return (
+    <>
+      <div className={style.catalog}>
+        <div className={style.global_header_bg}></div>
+      </div>
+      <Section1 />
+      <Section2 />
+      <Section3 />
+      <Section4 />
+      <Section5 />
+      <Section6 />
+      <Section7 />
+      <Section8 />
+      <Section9 />
+    </>
+  );
+}
+
+const Section1 = () => {
+  const style = useStyle(STYLE_ID);
+  const backgroundVideo = "/src/videos/about_video_background.mp4";
+
+  return (
+    <div className={style.section_1}>
+      <div className={style.side_banner}>
+        <Image src={'/src/images/@about/section01/side_banner.svg'} width={98} height={214} alt="" />
+      </div>
+      <div className={style.center_group}>
+        <div className={style.main_title}>
+          <div className={style.row_1}>
+            <span className={style.txt}>시작부터</span>
+            <span className={style.line}></span>
+            <span className={style.txt}>완성까지</span>
+          </div>
+          <div className={style.row_2}>
+            <span>문해력 잡는 영어독서 앱</span>
+          </div>
+          <div className={style.row_3}>
+            비결은 제대로된 <b>다독과 정독!</b>
+          </div>
+        </div>
+        <div className={style.app_link_group}>
+          <Link href={'/home/main'}>
+            <div className={style.btn}>Web</div>
+          </Link>
+          <Link href={'https://play.google.com/store/apps/details?id=com.a1edu.readinggate&pcampaignid=web_share'} target="_blank">
+            <div className={style.btn}>
+              <Image src='/src/images/@about/section01/img_googleplaylogo.svg' width={23} height={28} alt="" />
+              <span>Android</span>
+            </div>
+          </Link>
+          <Link href={'https://apps.apple.com/kr/app/id1207688674'} target="_blank">
+            <div className={style.btn}>
+              <Image src='/src/images/@about/section01/img_applelogo.svg' width={23} height={28} alt="" />
+              <span>iOS</span>
+            </div>
+          </Link>
+        </div>
+      </div>
+      {/* 백그라운드 비디오 연속 재생 */}
+      <div className={style.video_background}>
+        <video className="background-video" autoPlay muted loop>
+          <source src={backgroundVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  );
+};
+
+const Section2 = () => {
+  const style = useStyle(STYLE_ID);
+
+  return (
+    <div className={style.section_2}>
+      <div className={style.hero_text}>
+        <div className={style.row_1}>
+          <div className={style.col_1}>
+            <div className={style.txt_1}>회원 누적 74만명!</div>
+            <div className={style.txt_2}>초등학교 영어</div>
+          </div>
+          <div className={style.col_2}>
+          </div>
+          <div className={style.col_3}>프로그램 공급 1위</div>
+        </div>
+        <div className={style.row_2}>
+          <div className={style.award_item}>
+            <div>2019</div>
+            <div>올해의</div>
+            <div>브랜드 대상</div>
+          </div>
+          <div className={style.award_item}>
+            <div>2020</div>
+            <div>대한민국 교육</div>
+            <div>브랜드 대상</div>
+          </div>
+          <div className={style.award_item}>
+            <div>2021</div>
+            <div>대한민국 교육</div>
+            <div>브랜드 대상</div>
+          </div>
+          <div className={style.award_item}>
+            <div>2022</div>
+            <div>대한민국 교육</div>
+            <div>브랜드 대상</div>
+          </div>
+          <div className={style.award_item}>
+            <div>2023</div>
+            <div>대한민국 교육</div>
+            <div>브랜드 대상</div>
+          </div>
+          <div className={style.award_item}>
+            <div>2024</div>
+            <div>대한민국 교육</div>
+            <div>브랜드 대상</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const Section3 = () => {
+  const style = useStyle(STYLE_ID);
+
+  return (
+    <div className={style.section_3}>
+      <div className={style.col_1}></div>
+      <div className={style.col_2}>
+        <div className={style.txt_1}>영어 실력을 좌우하는 문해력 키우기,</div>
+        <div className={style.txt_2}>
+          <div>‘다독과 정독’이</div>
+          <div className={style.dot_box}>
+            <div className={style.txt}>정답입니다</div><span className={style.dot}></span>
+          </div>
+        </div>
+        <div className={style.txt_3}>
+          리딩게이트는 총 6,000여 권의 방대한 영어 원서 콘텐츠를 제공하는 국내 최대 온라인 영어도서관입니다.<br />
+          수준별로 나눠진 다양한 주제의 영어 원서를 바탕으로 소리 내어 읽고 독후학습 퀴즈를 풀며 문맥과 핵심을 파악하는 능력을 키울 수 있습니다.
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const Section4 = () => {
+  const style = useStyle(STYLE_ID);
+
+  const slideImages = [
+    '/src/images/@about/@ebook/row1_ka_1.png',
+    '/src/images/@about/@ebook/row1_ka_2.png',
+  ]
+
+  return (
+    <div className={style.section_4}>
+      <div className={style.row_1}>
+        <div className={style.txt_1}>다독을 위한 최상의 조건</div>
+        <div className={style.txt_2}>3,000권 이상의 오디오 스토리북 제공</div>
+      </div>
+      <div className={style.row_2}>
+        <div className={style.contents_image}>
+          <Image src={'/src/images/@about/@ebook/row1_ka_1.png'} width={660} height={400} alt="" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const Section5 = () => {
+  const style = useStyle(STYLE_ID);
+
+  const [tabActive, setTabActive] = useState([true, false, false]);
+
+  const Tabs = () => {
+    return (
+      <div className={style.tabs}>
+        <TabButton txt1={'Level K'} txt2={'초등 저학년'} active={tabActive[0]} onClick={() => {setTabActive([true, false, false])}} />
+        <TabButton txt1={'Level 1'} txt2={'초등 고학년'} active={tabActive[1]} onClick={() => {setTabActive([false, true, false])}} />
+        <TabButton txt1={'Level 2~6'} txt2={'중학생 이상'} active={tabActive[2]} onClick={() => {setTabActive([false, false, true])}} />
+      </div>
+    )
+  }
+
+  type TabButtonProps = {
+    txt1: string;
+    txt2: string;
+    active: boolean;
+    onClick: any;
+  };
+
+  const TabButton: React.FC<TabButtonProps> = ({txt1, txt2, active, onClick}) => {
+    return (
+      <div className={`${style.tab_button} ${active ? style.active : ''}`} onClick={onClick}>
+        <div className={style.txt_1}>{txt1}</div>
+        <div className={style.txt_2}>{txt2}</div>
+      </div>
+    )
+  }
+
+  const SlideCard = () => {
+    return (
+      <>
+        <div className={style.slide_card}>
+          <div className={style.btn_left}></div>
+          <div className={style.slide_image}>
+            <Image src={'/src/images/@about/section05/sample.png'} width={1100} height={720} alt='' />
+          </div>
+          <div className={style.btn_right}></div>
+        </div>
+        <div className={style.slide_card_contents}>
+          <div className={style.slide_card_contents_row_1}>
+            <div className={style.step}>Step1</div>
+            <div className={style.study_name}>Reading Comprehension</div>
+          </div>
+          <div className={style.slide_card_contents_row_2}>단어를 듣고 알맞은 그림을 찾으며 듣기 집중 훈련을 할 수 있어요.</div>
+        </div>
+        <div className={style.dots}>
+          <div className={`${style.dot} ${style.active}`}></div>
+          <div className={`${style.dot}`}></div>
+          <div className={`${style.dot}`}></div>
+          <div className={`${style.dot}`}></div>
+        </div>
+      </>
+    )
+  }
+
+  return (
+    <>
+      <div className={style.section_5}>
+        <div className={style.row_1}>
+          <div className={style.txt_1}>제대로된 정독 훈련!</div>
+          <div className={style.txt_2}>영어 원서 북퀴즈 6,000편 이상 제공</div>
+        </div>
+        <Tabs />
+        <SlideCard />
+      </div>
+      <div className={style.ai_speak}>
+        <Image src={'/src/images/@about/section04/img_speak.svg'} width={1754} height={974}  alt='' />
+      </div>
+    </>
+  )
+}
+
+const Section6 = () => {
+  const style = useStyle(STYLE_ID);
+
+  return (
+    <div className={style.section_6}>
+      <div className={style.container}>
+        <div className={style.col_left}>
+          <div className={style.title}>
+            <div className={style.txt_1}>학습 동기부여 UP</div>
+            <div className={style.txt_2}>레벨 마스터</div>
+            <div className={style.txt_3}>시스템</div>
+          </div>
+        </div>
+        <div className={style.col_right}>
+          <div className={style.card_1}>
+            <div className={style.symbol_image}>
+              <Image src={"/src/images/@about/section06/img_symbol_01.svg"} width={456} height={475} alt="" />
+              <div className={style.sub_text}>
+                <div className={style.txt}>Level Master</div>
+                <div className={style.txt}>System</div>
+              </div>
+            </div>
+            <div className={style.text_group}>
+            <div className={style.txt_1}>레벨별 목표 달성</div>
+              <div className={style.txt_2}>레벨 마스터 배지 획득!</div>
+              <div className={style.txt_3}>제공되는 학습 도서마다 독서량과 난이도를 측정하는 포인트가 부여되어 있으며, 북퀴즈를 통과할 때마다 해당 포인트를 획득할 수 있습니다. 각 레벨의 목표 포인트를 달성하면 자동으로 레벨 마스터 배지를 획득할 수 있습니다.</div>
+            </div>
+          </div>
+          <div className={style.card_2}>
+            <div className={style.symbol_image}>
+              <Image src={"/src/images/@about/section06/img_symbol_02.svg"} width={456} height={475} alt="" />
+              <div className={style.sub_text}>
+                <div className={style.txt}>Print a</div>
+                <div className={style.txt}>Certificate</div>
+              </div>
+            </div>
+            <div className={style.text_group}>
+              <div className={style.txt_1}>노력의 성취 기록</div>
+              <div className={style.txt_2}>레벨 마스터 인증서 제공</div>
+              <div className={style.txt_3}>레벨 마스터 배지를 획득하면 인증서를 출력할 수 있어 기념품이나 상장으로 활용할 수 있습니다.</div>
+            </div>
+          </div>
+          <div className={style.card_3}>
+            <div className={style.symbol_image}>
+              <Image src={"/src/images/@about/section06/img_symbol_03.svg"} width={456} height={475} alt="" />
+              <div className={style.sub_text}>
+                <div className={style.txt}>Quests</div>
+                <div className={style.txt}>Offered</div>
+              </div>
+            </div>
+            <div className={style.text_group}>
+              <div className={style.txt_1}>또 다른 재미</div>
+              <div className={style.txt_2}>서브 퀘스트 진행 <span>{`(도도와 친구들)`}</span></div>
+              <div className={style.txt_3}>레벨 마스터의 과정이 지루하지 않도록, 포인트가 쌓일수록 도도와 친구들의 성장 스토리를 함께 확인할 수 있습니다. 새롭게 만난 친구는 학습할 때마다 등장해 또 다른 재미를 선사합니다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const Section7 = () => {
+  const style = useStyle(STYLE_ID);
+
+  return (
+    <div className={style.section_7}>
+      <div className={style.title}>
+        <div className={style.txt_1}>꼼꼼한</div>
+        <div className={style.txt_2}>학습 케어 서비스</div>
+      </div>
+      <div className={style.jumbotron}>
+        <div className={style.col_left}>
+          <div className={style.text_group}>
+            <div className={style.txt_1}>레벨 테스트</div>
+            <div className={style.txt_2}>정기적인 레벨 테스트를 통해 학습자의 현재 수준을 확인할 수 있어요.</div>
+          </div>
+          <div className={style.arrows}>
+            <div className={style.btn_arrow_left}></div>
+            <div className={style.btn_arrow_right}></div>
+          </div>
+        </div>
+        <div className={style.col_right}>
+          <div className={style.card_contents}>
+            <Image src={'/src/images/@about/section07/contents01.png'} alt="" width={770} height={410} />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const Section8 = () => {
+  const style = useStyle(STYLE_ID);
+
+  const reviewData = [
+    {
+      title: "4살 아이! 보고 또 보니",
+      post: "영어로 대답해요!",
+      name: "허니* 님",
+    },
+    {
+      title: "5살 아이! 놀이처럼 했더니",
+      post: "단어가 저절로!",
+      name: "팬더** 님",
+    },
+    {
+      title: "엄마와 함께 목표를 세우고",
+      post: "독후프로그램까지 으쌰으쌰!",
+      name: "하나** 님",
+    },
+    {
+      title: "수준에 맞는 eBook으로",
+      post: "문제풀이까지 non-stop",
+      name: "김*아 님",
+    },
+    {
+      title: "학원 도움 없이도",
+      post: "단어, 문제풀기까지 커버 가능!",
+      name: "김*영님",
+    },
+    {
+      title: "4살 아이! 보고 또 보니",
+      post: "영어로 대답해요!",
+      name: "허니* 님",
+    },
+    {
+      title: "5살 아이! 놀이처럼 했더니",
+      post: "단어가 저절로!",
+      name: "팬더** 님",
+    },
+    {
+      title: "엄마와 함께 목표를 세우고",
+      post: "독후프로그램까지 으쌰으쌰!",
+      name: "하나** 님",
+    },
+    {
+      title: "수준에 맞는 eBook으로",
+      post: "문제풀이까지 non-stop",
+      name: "김*아 님",
+    },
+    {
+      title: "학원 도움 없이도",
+      post: "단어, 문제풀기까지 커버 가능!",
+      name: "김*영님",
+    },
+    {
+      title: "4살 아이! 보고 또 보니",
+      post: "영어로 대답해요!",
+      name: "허니* 님",
+    },
+    {
+      title: "5살 아이! 놀이처럼 했더니",
+      post: "단어가 저절로!",
+      name: "팬더** 님",
+    },
+    {
+      title: "엄마와 함께 목표를 세우고",
+      post: "독후프로그램까지 으쌰으쌰!",
+      name: "하나** 님",
+    },
+    {
+      title: "수준에 맞는 eBook으로",
+      post: "문제풀이까지 non-stop",
+      name: "김*아 님",
+    },
+    {
+      title: "학원 도움 없이도",
+      post: "단어, 문제풀기까지 커버 가능!",
+      name: "김*영님",
+    },
+  ]
+
+  type ReviewCardProps = {
+    txt_1: string;
+    txt_2: string;
+    txt_3: string;
+  }
+
+  const ReviewCard: React.FC<ReviewCardProps> = ({txt_1, txt_2, txt_3}) => {
+    return (
+      <div className={style.review_card}>
+        <div className={style.txt_1}>{txt_1}</div>
+        <div className={style.line}></div>
+        <div className={style.txt_2}>{txt_2}</div>
+        <div className={style.line}></div>
+        <div className={style.txt_3}>{txt_3}</div>
+      </div>
+    )
+  }
+
+  return (
+    <div className={style.section_8}>
+      <div className={style.container}>
+        <div className={style.header}>
+          <div className={style.txt_1}>꿈을 이룬 놀라운 경험!</div>
+          <div className={style.txt_2}>생생 이용 후기</div>
+          <div className={style.real_review_image}>
+            <Image src={'/src/images/@about/section08/text_real_review.svg'} width={376} height={120} alt=""/>
+          </div>
+        </div>
+        <div className={style.video_thumnail}>
+          <iframe frameBorder={0} width="100%" height="100%" src="https://www.youtube.com/embed/VZE-tDzBcxA?si=ONCujaG5TnjmGvsg" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+        </div>
+      </div>
+      <div className={style.reviews}>
+        {reviewData.map((a, i) => {
+          return (
+            <>
+              <ReviewCard txt_1={a.title} txt_2={a.post} txt_3={a.name} />
+            </>
+          )
+        })}
+      </div>
+      <div className={style.container_2}>
+        <div className={style.btn_line}>다른 후기 더보기</div>
+      </div>
+    </div>
+  )
+}
+
+const Section9 = () => {
+  const style = useStyle(STYLE_ID);
+
+  type CategoryButtonProps = {
+    img: string;
+    txt_1: string;
+    txt_2: string;
+    txt_3: string;
+    etc: boolean;
+    href: string;
+  }
+
+  const CategoryButton: React.FC<CategoryButtonProps> = ({img, txt_1, txt_2, txt_3, etc, href}) => {
+    return (
+      <Link href={href}>
+        <div className={style.category_button}>
+          <div className={style.icon_image}>
+            <Image src={img} width={100} height={100} alt="" />
+          </div>
+          <div className={style.txt_1}>{txt_1}</div>
+          <div className={style.txt_2}>{txt_2}</div>
+          <div className={`${etc ? style.txt_2 : style.txt_3}`}>{txt_3}</div>
+        </div>
+      </Link>
+    )
+  }
+
+  return (
+    <div className={style.section_9}>
+      <div className={style.header}>
+        <div className={style.txt_3}><b>리딩게이트</b></div>
+        <div className={style.txt_1}>국내외 1,000여개 교육기관이 선택!</div>
+        <div className={style.txt_2}>선생님들이 검증하고 학부모들이 인정한 제대로된 영어독서 앱</div>
+      </div>
+      <div className={style.buttons}>
+        <CategoryButton href='/catalog/dodo-abc' img="/src/images/@about/section09/ico_prek_icon.svg" txt_1="기초 영어" txt_2="유치원 ~ 초등 저학년까지" txt_3="207편" etc={false} />
+        <CategoryButton href='/catalog/ebook' img="/src/images/@about/section09/ico_ebook_icon.svg" txt_1="오디오 스토리북" txt_2="초등 저학년 ~ 성인까지" txt_3="3,000권 이상" etc={false} />
+        <CategoryButton href='/catalog/pbook-quiz' img="/src/images/@about/section09/ico_quiz_icon.svg" txt_1="영어 원서 북퀴즈" txt_2="초등 저학년 ~ 성인까지" txt_3="6,000편 이상" etc={false} />
+        <CategoryButton href='/catalog/level-master' img="/src/images/@about/section09/ico_level_up_icon.svg" txt_1="레벨 마스터 시스템" txt_2="수준별 자기주도 학습을 위한" txt_3="학습 동기부여 시스템" etc={true} />
+      </div>
+    </div>
+  )
+}
