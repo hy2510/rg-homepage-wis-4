@@ -3,7 +3,7 @@
 import { useScreenMode, useStyle } from "@/ui/context/StyleContext";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const STYLE_ID = "page_catalog";
 
@@ -72,7 +72,7 @@ const Section1 = () => {
       </div>
       {/* 백그라운드 비디오 연속 재생 */}
       <div className={style.video_background}>
-        <video className="background-video" autoPlay muted loop>
+        <video className="background-video" autoPlay muted loop playsInline>
           <source src={backgroundVideo} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -162,7 +162,47 @@ const Section4 = () => {
   const slideImages = [
     '/src/images/@about/@ebook/row1_ka_1.png',
     '/src/images/@about/@ebook/row1_ka_2.png',
+    '/src/images/@about/@ebook/row1_ka_3.png',
+    '/src/images/@about/@ebook/row1_kb_1.png',
+    '/src/images/@about/@ebook/row1_kb_2.png',
+    '/src/images/@about/@ebook/row1_kb_3.png',
+    '/src/images/@about/@ebook/row1_kc_1.png',
+    '/src/images/@about/@ebook/row1_kc_2.png',
+    '/src/images/@about/@ebook/row1_kc_3.png',
+    '/src/images/@about/@ebook/row2_1a_1.png',
+    '/src/images/@about/@ebook/row2_1a_2.png',
+    '/src/images/@about/@ebook/row2_1a_3.png',
+    '/src/images/@about/@ebook/row2_1b_1.png',
+    '/src/images/@about/@ebook/row2_1b_2.png',
+    '/src/images/@about/@ebook/row2_1b_3.png',
+    '/src/images/@about/@ebook/row2_1c_1.png',
+    '/src/images/@about/@ebook/row2_1c_2.png',
+    '/src/images/@about/@ebook/row2_1c_3.png',
+    '/src/images/@about/@ebook/row3_2a_1.png',
+    '/src/images/@about/@ebook/row3_2a_2.png',
+    '/src/images/@about/@ebook/row3_2a_3.png',
+    '/src/images/@about/@ebook/row3_2b_1.png',
+    '/src/images/@about/@ebook/row3_2b_2.png',
+    '/src/images/@about/@ebook/row3_2b_3.png',
+    '/src/images/@about/@ebook/row3_2c_1.png',
+    '/src/images/@about/@ebook/row3_2c_2.png',
+    '/src/images/@about/@ebook/row3_2c_3.png',
   ]
+
+  
+  const [imgIndex, setImgIndex] = useState(0)
+  const [fade, setFade] = useState(true)
+  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setImgIndex((prevIndex) => (prevIndex + 1) % slideImages.length);
+        setFade(true);
+      }, 300);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [imgIndex])
 
   return (
     <div className={style.section_4}>
@@ -172,7 +212,9 @@ const Section4 = () => {
       </div>
       <div className={style.row_2}>
         <div className={style.contents_image}>
-          <Image src={'/src/images/@about/@ebook/row1_ka_1.png'} width={660} height={400} alt="" />
+          <div className={style.bg}>
+            <Image src={slideImages[imgIndex]} width={660} height={400} alt="" className={`${fade ? 'slide-in-right' : 'slide-out-left'}`} />
+          </div>
         </div>
       </div>
     </div>
@@ -182,14 +224,112 @@ const Section4 = () => {
 const Section5 = () => {
   const style = useStyle(STYLE_ID);
 
-  const [tabActive, setTabActive] = useState([true, false, false]);
+  const isMobile = useScreenMode() === "mobile";
+
+  const [tabActive, setTabActive] = useState(0);
+
+  const subPageContainData = [
+    {
+      title: 'Level K',
+      step: [
+        {
+          name: 'STEP01 듣기 평가',
+          imgSrc: '/src/images/@about/@pbook-quiz/row1_k_step01.png',
+          exp1: 'Listening Activity',
+          exp2: '(소리를 듣고 알맞은 그림을 고르기)',
+        },
+        {
+          name: 'STEP02 단어 평가',
+          imgSrc: '/src/images/@about/@pbook-quiz/row1_k_step02.png',
+          exp1: 'Vocabulray Test',
+          exp2: '(그림을 보고 올바른 단어를 고르기)',
+        },
+        {
+          name: 'STEP03 이해력 평가',
+          imgSrc: '/src/images/@about/@pbook-quiz/row1_k_step03.png',
+          exp1: 'Reading Comprehension',
+          exp2: '(질문에 맞는 알맞은 그림을 고르기)',
+        },
+        {
+          name: 'STEP04 문장 만들기',
+          imgSrc: '/src/images/@about/@pbook-quiz/row1_k_step04.png',
+          exp1: 'Writing Activity',
+          exp2: '(카드를 보고 순서대로 나열하기)',
+        },
+      ],
+    },
+    {
+      title: 'Level 1',
+      step: [
+        {
+          name: 'STEP01 듣기 평가',
+          imgSrc: '/src/images/@about/@pbook-quiz/row2_1_step01.png',
+          exp1: 'Listening Activity',
+          exp2: '(그림을 보고 올바른 답을 고르기)',
+        },
+        {
+          name: 'STEP02 단어 평가',
+          imgSrc: '/src/images/@about/@pbook-quiz/row2_1_step02.png',
+          exp1: 'Vocabulray Test',
+          exp2: '(그림과 문장을 보고 올바른 단어를 고르기)',
+        },
+        {
+          name: 'STEP03 이해력 평가',
+          imgSrc: '/src/images/@about/@pbook-quiz/row2_1_step03.png',
+          exp1: 'Reading Comprehension',
+          exp2: '(질문에 맞는 알맞은 답을 고르기)',
+        },
+        {
+          name: 'STEP04 서머리 평가',
+          imgSrc: '/src/images/@about/@pbook-quiz/row2_1_step04.png',
+          exp1: 'Summary Test',
+          exp2: '(책 내용의 흐름에 맞게 문장을 나열하기)',
+        },
+        {
+          name: 'STEP05 문장 만들기',
+          imgSrc: '/src/images/@about/@pbook-quiz/row2_1_step05.png',
+          exp1: 'Writing Activity',
+          exp2: '(카드를 보고 올바른 순서대로 나열하기)',
+        },
+      ],
+    },
+    {
+      title: 'Level 2~6',
+      step: [
+        {
+          name: 'STEP01 이해력 평가',
+          imgSrc: '/src/images/@about/@pbook-quiz/row3_2_step01.png',
+          exp1: 'Reading Comprehension',
+          exp2: '(질문에 맞는 알맞은 답을 고르기)',
+        },
+        {
+          name: 'STEP02 단어 평가',
+          imgSrc: '/src/images/@about/@pbook-quiz/row3_2_step02.png',
+          exp1: 'Vocabulray Test',
+          exp2: '(단어의 뜻을 보고 단어를 입력하기)',
+        },
+        {
+          name: 'STEP03 서머리 평가',
+          imgSrc: '/src/images/@about/@pbook-quiz/row3_2_step03_1.png',
+          exp1: 'Summary Test',
+          exp2: '(책 내용의 흐름에 맞춰 문장을 나열하기)',
+        },
+        {
+          name: 'STEP05 빈칸 채우기',
+          imgSrc: '/src/images/@about/@pbook-quiz/row3_2_step04.png',
+          exp1: 'Cloze Test',
+          exp2: '(문장을 보고 빈칸에 알맞은 답을 채우기)',
+        },
+      ],
+    },
+  ]
 
   const Tabs = () => {
     return (
       <div className={style.tabs}>
-        <TabButton txt1={'Level K'} txt2={'초등 저학년'} active={tabActive[0]} onClick={() => {setTabActive([true, false, false])}} />
-        <TabButton txt1={'Level 1'} txt2={'초등 고학년'} active={tabActive[1]} onClick={() => {setTabActive([false, true, false])}} />
-        <TabButton txt1={'Level 2~6'} txt2={'중학생 이상'} active={tabActive[2]} onClick={() => {setTabActive([false, false, true])}} />
+        <TabButton txt1={'Level K'} txt2={'초등 저학년'} active={tabActive === 0} onClick={() => {setTabActive(0)}} />
+        <TabButton txt1={'Level 1'} txt2={'초등 고학년'} active={tabActive === 1} onClick={() => {setTabActive(1)}} />
+        <TabButton txt1={'Level 2~6'} txt2={'중학생 이상'} active={tabActive === 2} onClick={() => {setTabActive(2)}} />
       </div>
     )
   }
@@ -210,28 +350,39 @@ const Section5 = () => {
     )
   }
 
-  const SlideCard = () => {
+  interface aboutQuizDataProps {
+    name: string;
+    imgSrc: string;
+    exp1?: string;
+    exp2: string;
+  }
+
+  const SlideCard = ({data}: {tabActive: number; data: aboutQuizDataProps[]}) => {
+    const [stepActive, setStepActive] = useState(0)
+    const slideData = [...data]
+
     return (
       <>
         <div className={style.slide_card}>
-          <div className={style.btn_left}></div>
+          <div className={style.btn_left} onClick={() => {0 < stepActive && stepActive <= slideData.length - 1 ?  setStepActive(stepActive - 1) : setStepActive(slideData.length - 1)}}></div>
           <div className={style.slide_image}>
-            <Image src={'/src/images/@about/section05/sample.png'} width={1100} height={720} alt='' />
+            <Image src={slideData[stepActive].imgSrc} width={1100} height={720} alt='' />
           </div>
-          <div className={style.btn_right}></div>
+          <div className={style.btn_right} onClick={() => {stepActive < slideData.length - 1 ?  setStepActive(stepActive + 1) : setStepActive(0)}}></div>
         </div>
         <div className={style.slide_card_contents}>
           <div className={style.slide_card_contents_row_1}>
-            <div className={style.step}>Step1</div>
-            <div className={style.study_name}>Reading Comprehension</div>
+            <div className={style.step}>Step {stepActive + 1}</div>
+            <div className={style.study_name}>{slideData[stepActive].exp1}</div>
           </div>
-          <div className={style.slide_card_contents_row_2}>단어를 듣고 알맞은 그림을 찾으며 듣기 집중 훈련을 할 수 있어요.</div>
+          <div className={style.slide_card_contents_row_2}>{slideData[stepActive].exp2}</div>
         </div>
         <div className={style.dots}>
-          <div className={`${style.dot} ${style.active}`}></div>
-          <div className={`${style.dot}`}></div>
-          <div className={`${style.dot}`}></div>
-          <div className={`${style.dot}`}></div>
+          {slideData.map((a, i) => {
+            return (
+              <div key={i} className={`${style.dot} ${stepActive === i && style.active}`}></div>    
+            )
+          })}
         </div>
       </>
     )
@@ -245,10 +396,16 @@ const Section5 = () => {
           <div className={style.txt_2}>영어 원서 북퀴즈 6,000편 이상 제공</div>
         </div>
         <Tabs />
-        <SlideCard />
+        {tabActive === 0 && <SlideCard tabActive={0} data={subPageContainData[0].step} />}
+        {tabActive === 1 && <SlideCard tabActive={1} data={subPageContainData[1].step} />}
+        {tabActive === 2 && <SlideCard tabActive={2} data={subPageContainData[2].step} />}
       </div>
       <div className={style.ai_speak}>
-        <Image src={'/src/images/@about/section04/img_speak.svg'} width={1754} height={974}  alt='' />
+        {isMobile ? <>
+          <Image src={'/src/images/@about/section04/img_speak_mo.png'} width={360} height={523}  alt='' />
+        </> : <>
+          <Image src={'/src/images/@about/section04/img_speak.svg'} width={1754} height={974}  alt='' />
+        </>}
       </div>
     </>
   )
@@ -319,6 +476,29 @@ const Section6 = () => {
 const Section7 = () => {
   const style = useStyle(STYLE_ID);
 
+  const slideCards = [
+    {
+      txt1: '레벨 테스트',
+      txt2: '정기적인 레벨 테스트를 통해 학습자의 현재 수준을 확인할 수 있어요.',
+      imgSrc: '/src/images/@about/section07/contents01.png',
+    },
+    {
+      txt1: '주간/월간 리포트',
+      txt2: '아이의 독서 및 학습 내역이 매주, 매월 부모님 휴대폰으로 발송됩니다.',
+      imgSrc: '/src/images/@about/section07/contents03.png',
+    },
+    {
+      txt1: '알림 서비스',
+      txt2: '아이가 주요 학습 목표를 성취할 때마다 부모님 휴대폰으로 알림 메세지가 발송됩니다.',
+      imgSrc: '/src/images/@about/section07/contents07.png',
+    },
+  ]
+
+  const [slideNum, setSlideNum] = useState(0)
+
+  const btnLeftActive = () => {slideNum > 0 && slideNum <= slideCards.length - 1 ? setSlideNum(slideNum - 1) : setSlideNum(slideCards.length - 1)}
+  const btnRightActive = () => {slideNum >= 0 && slideNum < slideCards.length - 1 ? setSlideNum(slideNum + 1) : setSlideNum(0)}
+
   return (
     <div className={style.section_7}>
       <div className={style.title}>
@@ -328,17 +508,18 @@ const Section7 = () => {
       <div className={style.jumbotron}>
         <div className={style.col_left}>
           <div className={style.text_group}>
-            <div className={style.txt_1}>레벨 테스트</div>
-            <div className={style.txt_2}>정기적인 레벨 테스트를 통해 학습자의 현재 수준을 확인할 수 있어요.</div>
+            <div className={style.txt_1}>{slideCards[slideNum].txt1}</div>
+            <div className={style.txt_2}>{slideCards[slideNum].txt2}</div>
           </div>
           <div className={style.arrows}>
-            <div className={style.btn_arrow_left}></div>
-            <div className={style.btn_arrow_right}></div>
+            <div className={style.btn_arrow_left} onClick={() => {btnLeftActive()}}></div>
+            <div>{`${slideNum + 1}/${slideCards.length}`}</div>
+            <div className={style.btn_arrow_right} onClick={() => {btnRightActive()}}></div>
           </div>
         </div>
         <div className={style.col_right}>
           <div className={style.card_contents}>
-            <Image src={'/src/images/@about/section07/contents01.png'} alt="" width={770} height={410} />
+            <Image src={slideCards[slideNum].imgSrc} alt="" width={770} height={410} />
           </div>
         </div>
       </div>

@@ -1,10 +1,10 @@
-// @font-face {
-//   font-family: "JalnanGothic";
-//   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff")
-//     format("woff");
-//   font-weight: normal;
-//   font-style: normal;
-// }
+@font-face {
+  font-family: "JalnanGothic";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 @import url(//fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
 
 $puple_01: #ada3e0;
@@ -381,22 +381,30 @@ $container_max_width: 1168px;
       margin: auto;
       margin-top: 50px;
       margin-bottom: 30px;
-      // background-image: url('/src/images/@about/gif/kc.gif'), url('/src/images/@about/section04/img_bg_tablet.svg');
-      // background-repeat: no-repeat, no-repeat;
-      // background-size: 660px auto, 800px auto;
-      // background-position: center bottom 50px, center;
-      // background-repeat: no-repeat, no-repeat;
       background-image: url('/src/images/@about/section04/img_bg_tablet.svg');
       background-size: 800px auto;
       background-position: center;
       background-repeat: no-repeat;
       position: relative;
-      img {
+      .bg {
         width: 660px;
-        height: auto;
+        height: 495px;
         position: absolute;
         top: 45px;
         left: 70px;
+        background-color: #000;
+        z-index: 1;
+        border-radius: 10px;
+        overflow: hidden;
+        img {
+          width: 660px;
+          height: auto;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 2;
+          border-radius: 10px;
+        }
       }
     }
   }
@@ -468,11 +476,17 @@ $container_max_width: 1168px;
     gap: 10px;
     margin-bottom: 20px;
     .slide_image {
-      max-width: 850px;
+      max-width: 800px;
+      min-width: 650px;
+      min-height: 450px;
+      @media (max-width: 1440px) {
+        max-width: 650px;
+      }
       img {
         display: block;
         width: 100%;
         height: auto;
+        border-radius: var(--round-l);
       }
     }
     .btn_left,
@@ -719,6 +733,7 @@ $container_max_width: 1168px;
       }
       .arrows {
         display: flex;
+        align-items: center;
         gap: 20px;
         .btn_arrow_left,
         .btn_arrow_right {
